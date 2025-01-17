@@ -1,0 +1,39 @@
+/* Base CSS */
+@import url('https://necolas.github.io/normalize.css/8.0.1/normalize.css');
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,300;0,400;0,700;0,900;1,500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS */
+
+._scroll_lock {
+    overflow: hidden;
+}
+
+.ease-transition {
+    transition: opacity 0.3s ease, visibility 0.1s ease;
+}
+
+._sm_sidebar-show {
+    visibility: visible;
+    left: 0;
+}
+
+#_sm_side-bar {
+    visibility: hidden;
+    left: -999px;
+    transition: 0.3s;
+}
+
+.banner_swp-pagination {
+    @apply flex justify-end pr-6 pb-4;
+
+    .swiper-pagination-bullet {
+        @apply w-4 h-4 bg-slate-800;
+    }
+}
+
