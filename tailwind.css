@@ -1,3 +1,10 @@
+/* 
+Version: 1.0 
+Theme Name: Emana Blog - WP Theme
+Theme URI: https://emana.wp-theme.com
+Author: Fabricio Parola
+*/
+
 /* Base CSS */
 @import url('https://necolas.github.io/normalize.css/8.0.1/normalize.css');
 
@@ -8,8 +15,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom CSS */
 
+/* Custom CSS */
 ._scroll_lock {
     overflow: hidden;
 }
@@ -19,8 +26,8 @@
 }
 
 ._sm_sidebar-show {
-    visibility: visible;
-    left: 0;
+    visibility: visible !important;
+    left: 0 !important;
 }
 
 #_sm_side-bar {
@@ -36,4 +43,3 @@
         @apply w-4 h-4 bg-slate-800;
     }
 }
-

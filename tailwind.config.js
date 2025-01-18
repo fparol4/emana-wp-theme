@@ -11,7 +11,8 @@ const theme = {
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  purge: ['./public/**/*.html'], 
+  important: true, 
+  content: ['./**/*.(html|php)'], 
   theme: { extend: theme  } 
 }
 
