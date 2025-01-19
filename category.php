@@ -1,5 +1,3 @@
-<?php get_template_part('parts/layout/header'); ?>
-
 <?php
 $query = array('cat' => get_query_var('cat'));
 $query_result = new WP_Query($query);
@@ -14,6 +12,8 @@ while ($query_result->have_posts()) {
     array_push($query_posts, $post);
 }
 ?>
+
+<?php get_template_part('parts/layout/header'); ?>
 
 <!-- content -->
 <main id="content" class="bg-gray-100 flex flex-col items-center gap-16 mt-12 px-8 md:px-24 pb-24">

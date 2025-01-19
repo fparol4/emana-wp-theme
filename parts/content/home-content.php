@@ -76,21 +76,8 @@
                 </div>
             </div>
 
-            <!-- content/banner&tags -->
-            <div class="w-[160px] h-full hidden md:flex flex-col gap-8">
-                <!-- banner_2 -->
-                <img class=" object-cover" src="<?php g_asset('/banner-2.png') ?>" alt="">
-
-                <div class="h-1/3 flex flex-col">
-                    <h3 class="uppercase text-lg font-bold">tags</h3>
-                    <div class="grid grid-cols-2 gap-2 text-sm">
-                        <a href="/pages/tags.html" class="bg-slate-200 py-1 px-2 text-center">Saúde</a>
-                        <a href="#" class="bg-slate-200 py-1 px-2 text-center">Saúde</a>
-                        <a href="#" class="bg-slate-200 py-1 px-2 text-center">Saúde</a>
-                    </div>
-                </div>
-
-            </div>
+            <!-- content/layout-right -->
+            <?php get_template_part('parts/layout/right'); ?>
 
         </div>
 

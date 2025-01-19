@@ -34,6 +34,23 @@ add_action('wp_enqueue_scripts', 'wp_theme_scripts');
 
 /** [?] TODO: Add Jetpack  */
 
+/** @metaboxes - CMB2 */
+// function cmb2_setup() {
+//     var_dump('cmb2_setup'); 
+//     $cmb = new CMB2_Box(array(
+//         'id'=> 'sample_box',
+//         'title' => 'Sample Metabox', 
+//         'object_types' => array('post')
+//     ));
+
+//     $cmb->add_field(array(
+//         'id' => 'sample_field', 
+//         'name' => 'Sample Field', 
+//         'type' => 'text'
+//     )); 
+// }
+// add_action('admin_init', 'cmb2_setup'); 
+
 /** @custom */
 function debug_console($payload)
 {
