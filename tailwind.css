@@ -43,3 +43,15 @@ Author: Fabricio Parola
         @apply w-4 h-4 bg-slate-800;
     }
 }
+
+#post-content {
+    @apply whitespace-break-spaces; 
+
+    h3 { 
+        @apply text-2xl font-semibold; 
+    }
+
+    .aligncenter {
+        @apply flex justify-center items-center; 
+    }
+}

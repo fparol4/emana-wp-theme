@@ -11,6 +11,7 @@ while ($query_result->have_posts()) {
     );
     array_push($query_posts, $post);
 }
+wp_reset_postdata(); 
 ?>
 
 <?php get_template_part('parts/layout/header'); ?>
