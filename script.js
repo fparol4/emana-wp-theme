@@ -7,6 +7,15 @@ function win_redirect(path) {
     window.location.href = path;
 }
 
+function show_toast(message, options = {}) {
+    Toastify({
+        text: message,
+        duration: 3000,
+        style: { background: "linear-gradient(to right, #00b09b, #96c93d)" },
+        ...options
+    }).showToast(); 
+}
+
 /** _sm_search-bar */
 function toggle_sm_search() {
     var _hidden_classess = ['invisible', 'opacity-0']
@@ -143,7 +152,7 @@ function set_swiper() {
 
     new Swiper('.products-slider', {
         slidesPerView: 1,
-        spaceBetween: 20, 
+        spaceBetween: 20,
         scrollbar: {
             el: '.swiper-scrollbar',
         },
@@ -155,7 +164,56 @@ function set_swiper() {
     })
 }
 
+function set_open_contact() {
+    var _contact_email_inpt = document.querySelector('#_contact_email_inpt')
+    var _contact_hidden_wrapper = document.querySelector('#_contact_hidden_wrapper')
+
+    _contact_email_inpt.addEventListener('keyup', () => {
+        if (_contact_email_inpt.value) return _contact_hidden_wrapper.classList.add('show')
+        if (!_contact_email_inpt.value) return _contact_hidden_wrapper.classList.remove('show')
+    })
+}
+
+function _handle_form_submit() {
+    var form = document.querySelector('#_contact_form')
+    var _contact_form_btn = form.querySelector('#_contact_form_btn')
+    var form_data = new FormData(form)
+
+    var _confirm_inputs = [...form.querySelectorAll('input[type="checkbox"]')];
+    var _uncofirmed = _confirm_inputs.find(e => !e.checked);
+
+    var _terms_alert_text = form.querySelector('#_terms_alert')
+    if (_uncofirmed) return _terms_alert_text.classList.remove('hidden')
+    else _terms_alert_text.classList.add('hidden')
+
+    var _payload = {
+        email: form_data.get('email'),
+        first_name: form_data.get('first_name'),
+        last_name: form_data.get('last_name'),
+        birth_day: form_data.get('birth'),
+        phone: form_data.get('phone'),
+    }
+
+    log('[IMPLEMENT] - Add newsletter call', _payload)
+    show_toast('Cadastro realizado com sucesso ;)')
+    _contact_form_btn.disabled = true; 
+}
+
+
+function setup_home_form() {
+    /** @masks */
+    var _contact_birth_input = document.querySelector('#_contact_birth')
+    var _contact_phone_input = document.querySelector('#_contact_phone')
+
+    VMasker(_contact_birth_input).maskPattern('99/99/9999')
+    VMasker(_contact_phone_input).maskPattern('(99) 99999-9999')
+}
+
+
+
 window.onload = () => {
     set_swiper();
     set_search_keypress();
+    set_open_contact();
+    setup_home_form();
 }

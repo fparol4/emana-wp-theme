@@ -15,6 +15,12 @@ Author: Fabricio Parola
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    .flex-center {
+        @apply flex justify-center items-center; 
+    }
+}
+
 
 /* Custom CSS */
 ._scroll_lock {
@@ -44,7 +50,6 @@ Author: Fabricio Parola
     }
 }
 
-
 #post-content {
     @apply whitespace-break-spaces; 
 
@@ -56,3 +61,29 @@ Author: Fabricio Parola
         @apply flex justify-center items-center; 
     }
 }
+
+#_contact_hidden_wrapper { 
+    display: grid; 
+    grid-template-rows: 0fr;
+    transition: all 500ms ease; 
+}
+
+#_contact_hidden_wrapper.show { 
+    grid-template-rows: 1fr;
+}
+
+#_contact_hidden_form { 
+    overflow: hidden;
+}
+
+#_contact_form {
+    input[type="text"] { 
+        @apply bg-primary-300 w-full h-12 p-2 pl-6 rounded-full placeholder-gray-700 focus:outline-none; 
+    }
+
+    label {
+        @apply text-sm font-light;
+    }
+}
+
+

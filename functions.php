@@ -31,11 +31,17 @@ function wp_theme_scripts()
     wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
     wp_enqueue_script('swiper-js', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
 
+    wp_enqueue_style('toastfy-css', 'https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css');
+    wp_enqueue_script('toastfy-js', 'https://cdn.jsdelivr.net/npm/toastify-js');
+
+    wp_enqueue_script('vanilla-masker', '//cdn.jsdelivr.net/npm/vanilla-masker@1.1.1/build/vanilla-masker.min.js');
+
 }
 add_action('wp_enqueue_scripts', 'wp_theme_scripts');
 
 /** redirect when /?s={empty} to home */
-function redirect_empty_search() {
+function redirect_empty_search()
+{
     if (is_search() && empty(get_query_var('s'))) {
         wp_redirect(home_url('/'));
         exit;
@@ -97,13 +103,13 @@ function get_posts_handler(WP_REST_Request $request)
         'order' => 'DESC'
     ];
 
-    $total = _query_posts($query_args)['total']; 
+    $total = _query_posts($query_args)['total'];
     $posts = _query_posts($query_args)['posts'];
-  
+
     $payload = [
-        'posts' => $posts, 
-        'total_posts' => $total  
-    ]; 
+        'posts' => $posts,
+        'total_posts' => $total
+    ];
 
     $response = new WP_REST_Response($payload, 200);
     return $response;
@@ -184,66 +190,126 @@ function set_theme_options()
 
 
     /** @banners */
-    $group_field_id = $cmb->add_field(field: array(
+    $cmb->add_field(field: array(
         'id' => 'banner_group',
         'type' => 'group',
         'description' => 'Homepage - Banners',
+        'repeatable' => true,
         'options' => array(
-            'group_title' => esc_html__('{#}. Banner', 'cmb2'), // {#} gets replaced by row number
+            'group_title' => esc_html__('Banner #{#}', 'cmb2'), // {#} gets replaced by row number
             'add_button' => esc_html__('Adicionar', 'cmb2'),
             'remove_button' => esc_html__('Remover', 'cmb2'),
             'sortable' => true,
             'closed' => true,
         ),
+        'fields' => array(
+            array(
+                'id' => 'cmb_home_banner',
+                'name' => 'Imagem (obrigatório)',
+                'type' => 'file',
+                'attributes' => ['required' => 'required'],
+            ),
+            array(
+                'id' => 'cmb_home_banner_url',
+                'name' => 'URL de Redirecionamento (obrigatório)',
+                'type' => 'text_url',
+                'attributes' => ['required' => 'required'],
+            ),
+            array(
+                'id' => 'cmb_home_only_banner',
+                'name' => 'Somente Imagem',
+                'desc' => 'Selecione caso o banner seja apenas uma imagem',
+                'type' => 'checkbox',
+            ),
+            array(
+                'id' => 'cmb_home_banner_title',
+                'name' => 'Titulo',
+                'type' => 'text',
+            ),
+            array(
+                'id' => 'cmb_home_banner_subtitle',
+                'name' => 'Subtitulo',
+                'type' => 'text',
+            )
+
+        )
     ));
 
-    $cmb->add_group_field($group_field_id, array(
-        'id' => 'cmb_home_banner',
-        'name' => 'Imagem (obrigatório)',
-        'type' => 'file',
-        'attributes' => ['required' => 'required']
+    /** @products */
+    $cmb->add_field(field: array(
+        'id' => 'products_group',
+        'type' => 'group',
+        'description' => 'Homepage - Produtos',
+        'repeatable' => true,
+        'options' => array(
+            'group_title' => esc_html__('Produto #{#} ', 'cmb2'), // {#} gets replaced by row number
+            'add_button' => esc_html__('Adicionar', 'cmb2'),
+            'remove_button' => esc_html__('Remover', 'cmb2'),
+            'sortable' => true,
+            'closed' => true,
+        ),
+        'fields' => array(
+            array(
+                'id' => 'product_name',
+                'name' => 'Nome do Produto (obrigatório)',
+                'type' => 'text',
+                'attributes' => ['required' => 'required'],
+            ),
+            array(
+                'id' => 'product_url',
+                'name' => 'URL do Produto (obrigatório)',
+                'type' => 'text_url',
+                'attributes' => ['required' => 'required'],
+            ),
+            array(
+                'id' => 'product_image',
+                'name' => 'Imagem do Produto (obrigatório)',
+                'type' => 'file',
+                'attributes' => ['required' => 'required'],
+            ),
+            array(
+                'id' => 'product_price',
+                'name' => 'Preço do Produto (obrigatório)',
+                'type' => 'text_money',
+                'attributes' => ['required' => 'required'],
+            ),
+            array(
+                'id' => 'product_price_with_discount',
+                'name' => 'Preço do Produto com Desconto',
+                'type' => 'text_money',
+            ),
+            array(
+                'id' => 'product_installments',
+                'name' => 'Parcelas do Produto (obrigatório)',
+                'type' => 'text',
+                'attributes' => ['required' => 'required'],
+            ),
+        )
     ));
 
-    $cmb->add_group_field($group_field_id, array(
-        'id' => 'cmb_home_banner_url',
-        'name' => 'URL de Redirecionamento (obrigatório)',
-        'type' => 'text_url',
-        'attributes' => ['required' => 'required']
+    $cmb->add_field(field: array(
+        'id' => 'sidebar_group',
+        'type' => 'group',
+        'description' => 'Homepage - Sidebar',
+        'repeatable' => false,
+        'options' => array(
+            'closed' => true,
+        ),
+        'fields' => array(
+            array(
+                'id' => 'sidebar_banner_url',
+                'name' => 'Sidebar - Banner URL (obrigatório)',
+                'type' => 'text_url',
+                'attributes' => ['required' => 'required'],
+            ),
+            array(
+                'id' => 'sidebar_banner',
+                'name' => 'Sidebar - Banner (obrigatório)',
+                'type' => 'file',
+                'attributes' => ['required' => 'required'],
+            )
+        )
     ));
-
-    $cmb->add_group_field($group_field_id, array(
-        'id' => 'cmb_home_only_banner',
-        'name' => 'Somente Imagem',
-        'desc' => 'Selecione caso o banner seja apenas uma imagem',
-        'type' => 'checkbox',
-    ));
-
-    $cmb->add_group_field($group_field_id, array(
-        'id' => 'cmb_home_banner_title',
-        'name' => 'Titulo',
-        'type' => 'text',
-    ));
-
-    $cmb->add_group_field($group_field_id, array(
-        'id' => 'cmb_home_banner_subtitle',
-        'name' => 'Subtitulo',
-        'type' => 'text',
-    ));
-
-     /** @sidebarbanner */
-     $cmb->add_field([
-        'id' => 'sidebar_banner_url',
-        'name' => 'Sidebar - Banner URL (obrigatório)', 
-        'type' => 'text_url',
-        'attributes' => ['required' => 'required'],
-    ]);
-
-    $cmb->add_field([
-        'id' => 'sidebar_banner',
-        'name' => 'Sidebar - Banner (obrigatório)', 
-        'type' => 'file',
-        'attributes' => ['required' => 'required'],
-    ]);
 }
 add_action('cmb2_admin_init', 'set_theme_options');
 

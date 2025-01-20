@@ -23,34 +23,35 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
     <div class="w-full max-w-5xl flex flex-col gap-10">
 
         <!-- content/banner -->
-        <div class="md:h-[368px] -mt-7 bg-slate-600">
+        <div class="h-[536px] md:h-[368px] -mt-7 bg-slate-600">
             <div class="banner-carroussel swiper h-full shadow-md">
                 <div class="swiper-wrapper">
 
                     <?php foreach ($banners as $banner): ?>
                         <!-- When banner has only image -->
                         <?php if ($banner['cmb_home_only_banner']): ?>
-                            <div class="swiper-slide flex flex-col md:flex-row">
-                                <a class="w-full" href="<?php echo $banner['cmb_home_banner_url'] ?>">
-                                    <img class="w-full object-cover" src="<?php echo $banner['cmb_home_banner'] ?>">
+                            <div class="h-full md:h-auto swiper-slide flex flex-col md:flex-row">
+                                <a class="w-full h-full md:h-auto" href="<?php echo $banner['cmb_home_banner_url'] ?>">
+                                    <img class="w-full h-full md:h-auto object-cover" src="<?php echo $banner['cmb_home_banner'] ?>">
                                 </a>
                             </div>
                         <?php else: ?>
                             <!-- When banner is complete -->
                             <div class="swiper-slide flex flex-col md:flex-row">
-                                <img class="md:w-1/2 object-cover" src="<?php echo $banner['cmb_home_banner'] ?>">
-                                <div
-                                    class="md:w-1/2 h-full bg-slate-100 flex flex-col p-12 md:px-12 justify-center items-center gap-4 text-center">
-                                    <h4 class="uppercase text-amber-800 font-bold swiper-no-swiping">
-                                        <?php echo $banner['cmb_home_banner_title'] ?>
-                                    </h4>
-                                    <p class="text-2xl font-light swiper-no-swiping">
-                                        <?php echo $banner['cmb_home_banner_subtitle'] ?>
-                                    </p>
-                                    <a href="<?php echo $banner['cmb_home_banner_url'] ?>">
-                                        <button class="uppercase bg-primary-900 rounded-lg px-3 py-2 text-xl">leia mais</button>
-                                    </a>
-                                </div>
+                                    <img class="md:w-1/2 h-1/2 md:h-auto object-cover" src="<?php echo $banner['cmb_home_banner'] ?>">
+                                    <div
+                                        class="md:w-1/2 h-full bg-slate-100 flex flex-col p-12 md:px-12 justify-center items-center gap-4 text-center">
+                                        <h4 class="uppercase text-amber-800 font-bold swiper-no-swiping">
+                                            <?php echo $banner['cmb_home_banner_title'] ?>
+                                        </h4>
+                                        <p class="text-2xl font-light swiper-no-swiping">
+                                            <?php echo $banner['cmb_home_banner_subtitle'] ?>
+                                        </p>
+                                        <a href="<?php echo $banner['cmb_home_banner_url'] ?>">
+                                            <button class="uppercase bg-primary-900 rounded-lg px-3 py-2 text-xl">leia
+                                                mais</button>
+                                        </a>
+                                    </div>
                             </div>
                         <?php endif; ?>
                     <?php endforeach; ?>
@@ -78,8 +79,8 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
                 <!-- first-posts -->
                 <div class="h-2/3 flex flex-col gap-8">
                     <?php foreach ($first_posts as $post): ?>
-                        <div class="flex flex-col md:flex-row shadow-md">
-                            <img class="md:w-1/2 object-cover" src="<?php echo $post['banner']; ?>">
+                        <div class="h-[536px] md:h-auto flex flex-col md:flex-row shadow-md">
+                            <img class="md:w-1/2 h-1/2 md:h-auto object-cover" src="<?php echo $post['banner']; ?>">
                             <div
                                 class="md:w-1/2  bg-slate-100 flex flex-col p-12 md:px-12 justify-center items-center gap-4 text-center">
                                 <h4 class="uppercase text-amber-800 font-bold">SAÚDE!</h4>
@@ -105,10 +106,10 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
         <!-- content/grid_2 -->
         <div id="remaining-posts" class="w-full flex flex-col gap-8">
             <?php foreach ($remaining_posts as $post): ?>
-                <div id="r-post" class="flex flex-col md:flex-row shadow-md">
-                    <img class="md:w-1/2 object-cover" src="<?php echo $post['banner']; ?>">
+                <div class="post h-[536px] md:h-auto flex flex-col md:flex-row shadow-md">
+                    <img class="md:w-1/2 h-1/2 object-cover" src="<?php echo $post['banner']; ?>">
                     <div
-                        class="md:w-1/2  bg-slate-100 flex flex-col p-12 md:px-12 justify-center items-center gap-4 text-center">
+                        class="md:w-1/2 bg-slate-100 flex flex-col p-12 md:px-12 justify-center items-center gap-4 text-center">
                         <h4 class="uppercase text-amber-800 font-bold">SAÚDE!</h4>
                         <p class="text-xl font-light"><?php echo $post['title']; ?></p>
                         <a href="/?p=<?php echo $post['id'] ?>">
