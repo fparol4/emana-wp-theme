@@ -1,9 +1,10 @@
 <?php
-$category_id = get_query_var('cat');
-$category = get_the_category();
-$category_name = $category[0]->name;
-
-$query_args = ['cat' => $category_id];
+$search_str = get_query_var('s');
+$query_args = [
+    's' => $search_str,
+    'post_type' => 'post',
+    'posts_per_page' => -1
+];
 $posts = _query_posts($query_args);
 
 ?>
@@ -16,13 +17,19 @@ $posts = _query_posts($query_args);
             <div class="w-full md:w-[80%] flex flex-col justify-end h-full gap-6">
                 <div>
                     <h3 class="text-2xl font-medium">
-                        <span class="font-bold"><?php echo $category_name; ?></span> - Publicações da Tag
+                        Resultados da pesquisa:
+                        <span class="font-bold"><?php echo $search_str ?></span>
                     </h3>
-                    <span class="text-slate-800 text-xs">(<?php echo count($posts); ?>) - Publicações Encontradas
-                    </span>
+                    
+
+                    <?php if (empty($posts)): ?>
+                        <span class="text-slate-800 text-xs">Nenhuma publicação foi encontrada. Mas você pode tentar uma nova busca :) </span>
+                    <?php else: ?>
+                    <span class="text-slate-800 text-xs">(<?php echo count($posts); ?>) - Publicações Encontradas </span>
+                    <?php endif; ?>
                 </div>
 
-                <ul class="list-disc flex flex-col  gap-3">
+                <ul class="list-disc flex flex-col gap-3">
                     <?php foreach ($posts as $post): ?>
                         <li>
                             <a class="hover:underline" href="/?p=<?php echo $post['id'] ?>">

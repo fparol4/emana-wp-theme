@@ -907,12 +907,17 @@ video {
   --tw-text-opacity: 1 !important;
   color: rgb(146 64 14 / var(--tw-text-opacity, 1)) !important;
 }
+.text-slate-200{
+  --tw-text-opacity: 1 !important;
+  color: rgb(226 232 240 / var(--tw-text-opacity, 1)) !important;
+}
 .text-slate-800{
   --tw-text-opacity: 1 !important;
   color: rgb(30 41 59 / var(--tw-text-opacity, 1)) !important;
 }
-.underline{
-  text-decoration-line: underline !important;
+.text-slate-600{
+  --tw-text-opacity: 1 !important;
+  color: rgb(71 85 105 / var(--tw-text-opacity, 1)) !important;
 }
 .placeholder-gray-700::-moz-placeholder{
   --tw-placeholder-opacity: 1 !important;

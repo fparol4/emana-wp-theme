@@ -34,6 +34,15 @@ function wp_theme_scripts()
 }
 add_action('wp_enqueue_scripts', 'wp_theme_scripts');
 
+/** redirect when /?s={empty} to home */
+function redirect_empty_search() {
+    if (is_search() && empty(get_query_var('s'))) {
+        wp_redirect(home_url('/'));
+        exit;
+    }
+}
+add_action('template_redirect', 'redirect_empty_search');
+
 /** @custom-functions */
 function debug_console($payload)
 {
@@ -46,29 +55,61 @@ function g_asset($asset)
     echo $path;
 }
 
-/**
- * @CustomPostTypes
- */
+/** @Helpers */
+function _query_posts($query_args)
+{
+    $query = new WP_Query($query_args);
 
-/** @example - Creating a new post type */
-//  function register_default_cpt() { 
-//     $labels = [
-//         'name' => 'New CPT',
-//         'menu_name' => 'CPT SAPT'
-//     ]; 
+    $posts = [];
+    while ($query->have_posts()) {
+        $query->the_post();
+        $post_id = get_the_id();
+        $post = [
+            'id' => $post_id,
+            'title' => get_the_title(),
+            'content' => get_the_content(),
+            'category' => get_the_category(),
+            'banner' => get_post_meta($post_id, 'cmb_post_banner', true),
+            'summary' => get_post_meta($post_id, 'cmb_post_summary', true),
+        ];
 
-//     $args = [
-//         'public' => true, 
-//         'labels' => $labels,
-//         'has_archive' => true,
-//         'show_in_rest' => true,  
-//         'rewrite' => false  
-//     ]; 
+        array_push($posts, $post);
+    }
 
-//     register_post_type('new_cpt', $args);
-//  }
-//  add_action('init', 'register_default_cpt'); 
+    wp_reset_postdata();
+    return $posts;
+}
 
+
+/** @APIRoutes */
+
+function get_posts_handler(WP_REST_Request $request)
+{
+    $offset = $request->get_param('offset') ?: 0;
+    $limit = $request->get_param('limit') ?: 3;
+
+    $query_args = [
+        'posts_per_page' => $limit,
+        'offset' => $offset,
+        'orderby' => 'date',
+        'order' => 'DESC'
+    ];
+
+    $posts = _query_posts($query_args);
+    $response = new WP_REST_Response($posts, 200);
+    return $response;
+}
+
+function set_posts_route()
+{
+    $settings = array(
+        'methods' => 'GET',
+        'callback' => 'get_posts_handler',
+    );
+
+    register_rest_route('api', '/posts', $settings);
+}
+add_action('rest_api_init', 'set_posts_route');
 
 /**
  * Define the metabox and field configurations.
@@ -118,6 +159,83 @@ function set_post_metaboxes()
 }
 
 add_action('cmb2_admin_init', 'set_post_metaboxes');
+
+/**
+ * Hook in and register a metabox to handle a theme options page and adds a menu item.
+ */
+function set_theme_options()
+{
+    $cmb = new_cmb2_box(array(
+        'id' => 'cmb_theme_options',
+        'title' => 'Opções do Tema',
+        'object_types' => array('options-page'),
+        'option_key' => 'cmb_theme_options',
+        'icon_url' => 'dashicons-palmtree',
+    ));
+
+
+    /** @banners */
+    $group_field_id = $cmb->add_field(field: array(
+        'id' => 'banner_group',
+        'type' => 'group',
+        'description' => 'Homepage - Banners',
+        'options' => array(
+            'group_title' => esc_html__('{#}. Banner', 'cmb2'), // {#} gets replaced by row number
+            'add_button' => esc_html__('Adicionar', 'cmb2'),
+            'remove_button' => esc_html__('Remover', 'cmb2'),
+            'sortable' => true,
+            'closed' => false,
+        ),
+    ));
+
+    $cmb->add_group_field($group_field_id, array(
+        'id' => 'cmb_home_banner',
+        'name' => 'Imagem (obrigatório)',
+        'type' => 'file',
+        'attributes' => ['required' => 'required']
+    ));
+
+    $cmb->add_group_field($group_field_id, array(
+        'id' => 'cmb_home_banner_url',
+        'name' => 'URL de Redirecionamento (obrigatório)',
+        'type' => 'text_url',
+        'attributes' => ['required' => 'required']
+    ));
+
+    $cmb->add_group_field($group_field_id, array(
+        'id' => 'cmb_home_only_banner',
+        'name' => 'Somente Imagem',
+        'desc' => 'Selecione caso o banner seja apenas uma imagem',
+        'type' => 'checkbox',
+    ));
+
+    $cmb->add_group_field($group_field_id, array(
+        'id' => 'cmb_home_banner_title',
+        'name' => 'Titulo',
+        'type' => 'text',
+    ));
+
+    $cmb->add_group_field($group_field_id, array(
+        'id' => 'cmb_home_banner_subtitle',
+        'name' => 'Subtitulo',
+        'type' => 'text',
+    ));
+}
+add_action('cmb2_admin_init', 'set_theme_options');
+
+function set_message_callback($cmb, $args)
+{
+    if (!empty($args['should_notify'])) {
+
+        if ($args['is_updated']) {
+
+            // Modify the updated message.
+            $args['message'] = sprintf(esc_html__('%s &mdash; Updated!', 'cmb2'), $cmb->prop('title'));
+        }
+
+        add_settings_error($args['setting'], $args['code'], $args['message'], $args['type']);
+    }
+}
 
 // function add_custom_metabox_to_posts() {
 //     $cmb = new_cmb2_box([
@@ -816,94 +934,6 @@ function yourprefix_register_taxonomy_metabox()
         'type' => 'text',
     ));
 
-}
-
-add_action('cmb2_admin_init', 'yourprefix_register_theme_options_metabox');
-/**
- * Hook in and register a metabox to handle a theme options page and adds a menu item.
- */
-function yourprefix_register_theme_options_metabox()
-{
-
-    /**
-     * Registers options page menu item and form.
-     */
-    $cmb_options = new_cmb2_box(array(
-        'id' => 'yourprefix_theme_options_page',
-        'title' => esc_html__('Theme Options', 'cmb2'),
-        'object_types' => array('options-page'),
-
-        /*
-         * The following parameters are specific to the options-page box
-         * Several of these parameters are passed along to add_menu_page()/add_submenu_page().
-         */
-
-        'option_key' => 'yourprefix_theme_options', // The option key and admin menu page slug.
-        'icon_url' => 'dashicons-palmtree', // Menu icon. Only applicable if 'parent_slug' is left empty.
-        // 'menu_title'              => esc_html__( 'Options', 'cmb2' ), // Falls back to 'title' (above).
-        // 'parent_slug'             => 'themes.php', // Make options page a submenu item of the themes menu.
-        // 'capability'              => 'manage_options', // Cap required to view options-page.
-        // 'position'                => 1, // Menu position. Only applicable if 'parent_slug' is left empty.
-        // 'admin_menu_hook'         => 'network_admin_menu', // 'network_admin_menu' to add network-level options page.
-        // 'priority'                => 10, // Define the page-registration admin menu hook priority.
-        // 'display_cb'              => false, // Override the options-page form output (CMB2_Hookup::options_page_output()).
-        // 'save_button'             => esc_html__( 'Save Theme Options', 'cmb2' ), // The text for the options-page save button. Defaults to 'Save'.
-        // 'disable_settings_errors' => true, // On settings pages (not options-general.php sub-pages), allows disabling.
-        // 'message_cb'              => 'yourprefix_options_page_message_callback',
-        // 'tab_group'               => '', // Tab-group identifier, enables options page tab navigation.
-        // 'tab_title'               => null, // Falls back to 'title' (above).
-        // 'autoload'                => false, // Defaults to true, the options-page option will be autloaded.
-    ));
-
-    /**
-     * Options fields ids only need
-     * to be unique within this box.
-     * Prefix is not needed.
-     */
-    $cmb_options->add_field(array(
-        'name' => esc_html__('Site Background Color', 'cmb2'),
-        'desc' => esc_html__('field description (optional)', 'cmb2'),
-        'id' => 'bg_color',
-        'type' => 'colorpicker',
-        'default' => '#ffffff',
-    ));
-
-}
-
-/**
- * Callback to define the optionss-saved message.
- *
- * @param CMB2  $cmb The CMB2 object.
- * @param array $args {
- *     An array of message arguments
- *
- *     @type bool   $is_options_page Whether current page is this options page.
- *     @type bool   $should_notify   Whether options were saved and we should be notified.
- *     @type bool   $is_updated      Whether options were updated with save (or stayed the same).
- *     @type string $setting         For add_settings_error(), Slug title of the setting to which
- *                                   this error applies.
- *     @type string $code            For add_settings_error(), Slug-name to identify the error.
- *                                   Used as part of 'id' attribute in HTML output.
- *     @type string $message         For add_settings_error(), The formatted message text to display
- *                                   to the user (will be shown inside styled `<div>` and `<p>` tags).
- *                                   Will be 'Settings updated.' if $is_updated is true, else 'Nothing to update.'
- *     @type string $type            For add_settings_error(), Message type, controls HTML class.
- *                                   Accepts 'error', 'updated', '', 'notice-warning', etc.
- *                                   Will be 'updated' if $is_updated is true, else 'notice-warning'.
- * }
- */
-function yourprefix_options_page_message_callback($cmb, $args)
-{
-    if (!empty($args['should_notify'])) {
-
-        if ($args['is_updated']) {
-
-            // Modify the updated message.
-            $args['message'] = sprintf(esc_html__('%s &mdash; Updated!', 'cmb2'), $cmb->prop('title'));
-        }
-
-        add_settings_error($args['setting'], $args['code'], $args['message'], $args['type']);
-    }
 }
 
 /**

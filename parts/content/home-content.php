@@ -1,32 +1,19 @@
 <?php
-// get-first-5-posts 
-$POSTS_TO_LOAD = 3; 
-$FIRST_SECTION_POSTS = 2; 
+/** @loadbanners */
+$banners = cmb2_get_option('cmb_theme_options', 'banner_group');
 
-$query = new WP_Query([
+/** @loadposts */
+$POSTS_TO_LOAD = 3;
+$FIRST_SECTION_POSTS = 2;
+
+$query_args = [
     'posts_per_page' => $POSTS_TO_LOAD,
     'post_status' => 'publish',
-    'orderby' => 'date', 
-    'order' => 'DESC' 
-]);
+    'orderby' => 'date',
+    'order' => 'DESC'
+];
 
-$posts = [];
-while ($query->have_posts()) {
-    $query->the_post();
-    $post_id = get_the_id();
-    $post = [
-        'id' => $post_id,
-        'title' => get_the_title(),
-        'content' => get_the_content(),
-        'banner' => get_post_meta($post_id, 'cmb_post_banner', true),
-        'summary' => get_post_meta($post_id, 'cmb_post_summary', true),
-    ];
-
-    array_push($posts, $post);
-}
-
-wp_reset_postdata();
-
+$posts = _query_posts($query_args);
 $first_posts = array_slice($posts, 0, $FIRST_SECTION_POSTS);
 $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
 ?>
@@ -40,34 +27,33 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
             <div class="banner-carroussel swiper h-full shadow-md">
                 <div class="swiper-wrapper">
 
-                    <div class="swiper-slide flex flex-col md:flex-row">
-                        <img class="md:w-1/2 object-cover" src="/misc/banner-1.png">
-                        <div
-                            class="md:w-1/2 h-full bg-slate-100 flex flex-col p-12 md:px-12 justify-center items-center gap-4 text-center">
-                            <h4 class="uppercase text-amber-800 font-bold swiper-no-swiping">autocuidado e beleza
-                            </h4>
-                            <p class="text-2xl font-light swiper-no-swiping">Colágeno: entenda mais sobre os
-                                principais tipos e
-                                indicações de uso.</p>
-                            <a href="/pages/post.html">
-                                <button class="uppercase bg-primary-900 rounded-lg px-3 py-2 text-xl">leia mais</button>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="swiper-slide flex flex-col md:flex-row">
-                        <img class="md:w-1/2 object-cover" src="/misc/banner-1.png">
-                        <div
-                            class="md:w-1/2 h-full bg-slate-100 flex flex-col p-12 md:px-12 justify-center items-center gap-4 text-center">
-                            <h4 class="uppercase text-amber-800 font-bold swiper-no-swiping">autocuidado e beleza
-                            </h4>
-                            <p class="text-2xl font-light swiper-no-swiping">Colágeno: entenda mais sobre os
-                                principais tipos e
-                                indicações de uso.</p>
-                            <button class="uppercase bg-primary-900 rounded-lg px-3 py-2 text-xl">leia mais</button>
-                        </div>
-                    </div>
-
+                    <?php foreach ($banners as $banner): ?>
+                        <!-- When banner has only image -->
+                        <?php if ($banner['cmb_home_only_banner']): ?>
+                            <div class="swiper-slide flex flex-col md:flex-row">
+                                <a class="w-full" href="<?php echo $banner['cmb_home_banner_url'] ?>">
+                                    <img class="w-full object-cover" src="<?php echo $banner['cmb_home_banner'] ?>">
+                                </a>
+                            </div>
+                        <?php else: ?>
+                            <!-- When banner is complete -->
+                            <div class="swiper-slide flex flex-col md:flex-row">
+                                <img class="md:w-1/2 object-cover" src="<?php echo $banner['cmb_home_banner'] ?>">
+                                <div
+                                    class="md:w-1/2 h-full bg-slate-100 flex flex-col p-12 md:px-12 justify-center items-center gap-4 text-center">
+                                    <h4 class="uppercase text-amber-800 font-bold swiper-no-swiping">
+                                        <?php echo $banner['cmb_home_banner_title'] ?>
+                                    </h4>
+                                    <p class="text-2xl font-light swiper-no-swiping">
+                                        <?php echo $banner['cmb_home_banner_subtitle'] ?>
+                                    </p>
+                                    <a href="<?php echo $banner['cmb_home_banner_url'] ?>">
+                                        <button class="uppercase bg-primary-900 rounded-lg px-3 py-2 text-xl">leia mais</button>
+                                    </a>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
                 </div>
                 <div class="swiper-pagination banner_swp-pagination"></div>
             </div>
@@ -109,9 +95,9 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
         </div>
 
         <!-- content/grid_2 -->
-        <div class="w-full flex flex-col gap-8">
+        <div id="remaining-posts" class="w-full flex flex-col gap-8">
             <?php foreach ($remaining_posts as $post): ?>
-                <div class="flex flex-col md:flex-row shadow-md">
+                <div id="r-post" class="flex flex-col md:flex-row shadow-md">
                     <img class="md:w-1/2 object-cover" src="<?php echo $post['banner']; ?>">
                     <div
                         class="md:w-1/2  bg-slate-100 flex flex-col p-12 md:px-12 justify-center items-center gap-4 text-center">
@@ -126,20 +112,6 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
                     </div>
                 </div>
             <?php endforeach; ?>
-<!-- 
-            <div class="flex flex-col md:flex-row shadow-md">
-                <img class="md:w-1/2 object-cover" src="/misc/banner-1.png">
-
-                <div
-                    class="md:w-1/2  bg-slate-100 flex flex-col p-12 md:px-12 justify-center items-center gap-4 text-center">
-                    <h4 class="uppercase text-amber-800 font-bold">autocuidado e beleza</h4>
-                    <p class="text-xl font-light">Colágeno: entenda mais sobre os principais tipos e
-                        indicações de uso.</p>
-                    <button class="uppercase bg-primary-900 rounded-lg px-3 py-2 text-xl">leia mais</button>
-                </div>
-
-            </div>
-        </div> -->
-
+        </div>
     </div>
 </main>
