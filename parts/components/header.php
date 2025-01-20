@@ -9,10 +9,11 @@
 
     <div class="hidden md:flex items-center flex-grow max-w-[40rem] relative">
         <input
+            id="_search_input"
             class="w-full h-9 p-2 border border-gray-700 rounded-full placeholder-gray-700 focus:outline-none bg-transparent"
             type="text" name="name" placeholder='Buscar no Blog...' />
 
-        <button class="absolute right-4" onclick="implement_me()">
+        <button id="_search_btn" class="absolute right-4">
             <svg width='27' height='26' fill='none' xmlns='http://www.w3.org/2000/svg'>
                 <g clip-path='url(#clip0_464_423)' fill='#000'>
                     <path
@@ -44,7 +45,7 @@
     </div>
 
     <div class="flex md:hidden justify-center items-center gap-4">
-        <button id="sm_search_btn" class="mt-2" onclick="toggle_sm_search()">
+        <button id="_sm_search_btn" class="mt-2" onclick="toggle_sm_search()">
             <svg width='35px' height='35px' fill='none' xmlns='http://www.w3.org/2000/svg'>
                 <g clip-path='url(#clip0_464_423)' fill='#000'>
                     <path
@@ -73,8 +74,8 @@
 
     <!-- sm_search_box -->
     <div id="sm_search_box"
-        class="absolute opacity-0 w-[90%] h-16 top-[124px] z-10 inset-0 m-auto bg-primary-900 justify-center items-center shadow-lg | flex  invisible | ease-transition">
-        <input type="text" placeholder="Digite sua pesquisa..." class="w-[96%] h-8 pl-2 outline-none">
+        class="absolute opacity-0 w-[95%] py-5 top-[124px] z-10 inset-0 m-auto bg-primary-900 justify-center items-center shadow-lg | flex  invisible | ease-transition">
+        <input id="_sm_search_input" type="text" placeholder="Digite sua pesquisa..." class="w-[98%] h-8 pl-2 outline-none">
     </div>
     <!-- sm_search_box -->
 

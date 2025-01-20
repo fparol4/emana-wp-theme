@@ -4,7 +4,7 @@ $category = get_the_category();
 $category_name = $category[0]->name;
 
 $query_args = ['cat' => $category_id];
-$posts = _query_posts($query_args);
+$posts = _query_posts($query_args)['posts'];
 
 ?>
 

@@ -13,7 +13,7 @@ $query_args = [
     'order' => 'DESC'
 ];
 
-$posts = _query_posts($query_args);
+$posts = _query_posts($query_args)['posts'];
 $first_posts = array_slice($posts, 0, $FIRST_SECTION_POSTS);
 $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
 ?>
@@ -59,6 +59,11 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
             </div>
         </div>
 
+        <!-- @sm-product-slider -->
+        <div class="flex md:hidden w-full">
+            <?php get_template_part('/parts/components/products-slider'); ?>
+        </div>
+
         <!-- content/grid_1 -->
         <div class="w-full flex justify-between">
 
@@ -66,7 +71,9 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
             <div class="md:w-[80%] flex flex-col justify-end h-full gap-12">
 
                 <!-- products -->
-                <div class="w-full h-72 bg-slate-200"></div>
+                <div class="w-full hidden md:flex">
+                    <?php get_template_part('/parts/components/products-slider'); ?>
+                </div>
 
                 <!-- first-posts -->
                 <div class="h-2/3 flex flex-col gap-8">
@@ -93,6 +100,7 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
             <?php get_template_part('parts/layout/right'); ?>
 
         </div>
+
 
         <!-- content/grid_2 -->
         <div id="remaining-posts" class="w-full flex flex-col gap-8">

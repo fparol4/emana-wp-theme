@@ -5,7 +5,7 @@ $query_args = [
     'post_type' => 'post',
     'posts_per_page' => -1
 ];
-$posts = _query_posts($query_args);
+$posts = _query_posts($query_args)['posts'];
 
 ?>
 

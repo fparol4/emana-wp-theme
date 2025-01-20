@@ -2,6 +2,11 @@ const { log } = console
 
 log('Emana Blog - WP Theme [1.0.0]')
 
+/** @helpers */
+function win_redirect(path) {
+    window.location.href = path;
+}
+
 /** _sm_search-bar */
 function toggle_sm_search() {
     var _hidden_classess = ['invisible', 'opacity-0']
@@ -24,7 +29,7 @@ function toggle_sm_search() {
     if (!_is_open) {
         show()
         var _sm_search_listener = document.addEventListener('click', (evt) => {
-            var _allowed_click = ['#sm_search_btn', '#sm_search_box'].find(v => evt.target.closest(v))
+            var _allowed_click = ['#_sm_search_btn', '#sm_search_box'].find(v => evt.target.closest(v))
             if (!_allowed_click) {
                 hide();
                 document.removeEventListener('click', _sm_search_listener)
@@ -56,20 +61,15 @@ function _toggle_pg_scroll() {
 
 /** @loadmore */
 
-var _load_more_offset = 3; 
+var _load_more_offset = 3;
 async function _load_more_posts() {
-    var _load_limit = 1; 
+    var _load_limit = 1;
     var _remaining_posts_box = document.querySelector('#remaining-posts');
     var base_url = `?rest_route=/api/posts&offset=${_load_more_offset}&limit=${_load_limit}`;
-    var next_posts = await fetch(base_url)
+    var { posts, total_posts } = await fetch(base_url)
         .then(response => response.json());
 
-    if (!next_posts.length) { 
-        var btn_load_more = document.querySelector('#btn_load_more'); 
-        btn_load_more.remove(); 
-    }
-
-    var posts_html = next_posts.reduce((p, c) => {
+    var posts_html = posts.reduce((p, c) => {
         var [_post_category] = c.category
         var _post_html = `
             <div id="r-post" class="flex flex-col md:flex-row shadow-md">
@@ -87,11 +87,46 @@ async function _load_more_posts() {
         return p + _post_html
     }, '')
 
-    _load_more_offset += _load_limit 
+    _load_more_offset += _load_limit
+
+    if (_load_more_offset === total_posts) {
+        var btn_load_more = document.querySelector('#btn_load_more');
+        btn_load_more.remove();
+    }
+
     _remaining_posts_box.innerHTML += posts_html
 }
 
-window.onload = () => {
+/** @searchkeyevents */
+
+function set_search_keypress() {
+    var _search_input = document.querySelector('#_search_input');
+    var _sm_search_input = document.querySelector('#_sm_search_input');
+
+    [_search_input, _sm_search_input].forEach(element => {
+        element.addEventListener('keypress', event => {
+            var _search = element.value
+            var _is_enter = event.key === 'Enter'
+            if (_search && _is_enter) win_redirect(`/?s=${_search}`)
+        })
+    })
+
+    var _search_btn = document.querySelector('#_search_btn');
+    var _sm_search_btn = document.querySelector('#_sm_search_btn');
+
+    _search_btn.addEventListener('click', () => {
+        var _search = _search_input.value
+        if (_search) win_redirect(`/?s=${_search}`)
+    })
+
+    _sm_search_btn.addEventListener('click', () => {
+        var _search = _sm_search_input.value
+        if (_search) win_redirect(`/?s=${_search}`)
+    })
+}
+
+/** Swiper */
+function set_swiper() {
     new Swiper('.top-header-swiper', {
         // autoplay: { delay: 1000 },
         spaceBetween: 100
@@ -106,18 +141,21 @@ window.onload = () => {
         }
     })
 
-    new Swiper('.product-swiper', {
+    new Swiper('.products-slider', {
         slidesPerView: 1,
-        pagination: {
-            el: '.product_swp-pag',
-            clickable: true
+        spaceBetween: 20, 
+        scrollbar: {
+            el: '.swiper-scrollbar',
         },
         breakpoints: {
             768: {
                 slidesPerView: 3,
-                spaceBetween: 30
-                // centeredSlides: true,
             }
         }
     })
+}
+
+window.onload = () => {
+    set_swiper();
+    set_search_keypress();
 }

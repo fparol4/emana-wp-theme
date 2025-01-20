@@ -60,6 +60,8 @@ function _query_posts($query_args)
 {
     $query = new WP_Query($query_args);
 
+    // var_dump($query->found_posts); 
+
     $posts = [];
     while ($query->have_posts()) {
         $query->the_post();
@@ -77,7 +79,7 @@ function _query_posts($query_args)
     }
 
     wp_reset_postdata();
-    return $posts;
+    return ['posts' => $posts, 'total' => $query->found_posts];
 }
 
 
@@ -95,8 +97,15 @@ function get_posts_handler(WP_REST_Request $request)
         'order' => 'DESC'
     ];
 
-    $posts = _query_posts($query_args);
-    $response = new WP_REST_Response($posts, 200);
+    $total = _query_posts($query_args)['total']; 
+    $posts = _query_posts($query_args)['posts'];
+  
+    $payload = [
+        'posts' => $posts, 
+        'total_posts' => $total  
+    ]; 
+
+    $response = new WP_REST_Response($payload, 200);
     return $response;
 }
 
@@ -184,7 +193,7 @@ function set_theme_options()
             'add_button' => esc_html__('Adicionar', 'cmb2'),
             'remove_button' => esc_html__('Remover', 'cmb2'),
             'sortable' => true,
-            'closed' => false,
+            'closed' => true,
         ),
     ));
 
@@ -220,6 +229,21 @@ function set_theme_options()
         'name' => 'Subtitulo',
         'type' => 'text',
     ));
+
+     /** @sidebarbanner */
+     $cmb->add_field([
+        'id' => 'sidebar_banner_url',
+        'name' => 'Sidebar - Banner URL (obrigatório)', 
+        'type' => 'text_url',
+        'attributes' => ['required' => 'required'],
+    ]);
+
+    $cmb->add_field([
+        'id' => 'sidebar_banner',
+        'name' => 'Sidebar - Banner (obrigatório)', 
+        'type' => 'file',
+        'attributes' => ['required' => 'required'],
+    ]);
 }
 add_action('cmb2_admin_init', 'set_theme_options');
 

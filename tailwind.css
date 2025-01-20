@@ -36,13 +36,14 @@ Author: Fabricio Parola
     transition: 0.3s;
 }
 
-.banner_swp-pagination {
+.banner_swp-pagination, .products-slider-pagination {
     @apply flex justify-end pr-6 pb-4;
 
     .swiper-pagination-bullet {
         @apply w-4 h-4 bg-slate-800;
     }
 }
+
 
 #post-content {
     @apply whitespace-break-spaces; 
