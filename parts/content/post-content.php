@@ -15,11 +15,21 @@ $post = $args['post'];
             </div>
         </div>
 
+        <!-- @sm-product-slider -->
+        <div class="flex md:hidden w-full">
+            <?php get_template_part('/parts/components/products-slider'); ?>
+        </div>
+
         <!-- content/grid_1 -->
         <div class="w-full flex justify-between">
             <div class="md:w-[80%] flex flex-col justify-end h-full gap-12 font-light">
+                <!-- products -->
+                <div class="w-full hidden md:flex">
+                    <?php get_template_part('/parts/components/products-slider'); ?>
+                </div>
+
                 <div id="post-content" class="leading-tight flex flex-col gap-4">
-                <?php echo $post['content']; ?>
+                    <?php echo $post['content']; ?>
                 </div>
             </div>
 

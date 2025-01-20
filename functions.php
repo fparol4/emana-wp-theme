@@ -126,6 +126,12 @@ function set_posts_route()
 }
 add_action('rest_api_init', 'set_posts_route');
 
+function normalize_price($price)
+{
+    $normalized = str_replace([','], [''], $price);
+    return (float) $normalized;
+}
+
 /**
  * Define the metabox and field configurations.
  */
@@ -150,27 +156,84 @@ function set_post_metaboxes()
         'object_types' => ['post'],
         'context' => 'normal',
         'priority' => 'high',
-        'show_names' => true
+        'show_names' => true,
+        'fields' => array(
+            array(
+                'id' => 'cmb_post_banner',
+                'name' => 'Banner (Obrigatório)',
+                'desc' => 'Faça o upload da imagem principal da publicação',
+                'type' => 'file',
+                'attributes' => ['required' => 'required']
+            ),
+            array(
+                'id' => 'cmb_post_summary',
+                'name' => 'Sumário (Obrigatório)',
+                'desc' => 'Adicione um resumo descritivo da publicação',
+                'type' => 'textarea_small',
+                'attributes' => ['required' => 'required'],
+                'options' => [
+                    'textarea_rows' => 5
+                ],
+            )
+        )
     ]);
 
-    $cmb->add_field([
-        'id' => 'cmb_post_banner',
-        'name' => 'Banner (Obrigatório)',
-        'desc' => 'Faça o upload da imagem principal da publicação',
-        'type' => 'file',
-        'attributes' => ['required' => 'required']
-    ]);
-
-    $cmb->add_field([
-        'id' => 'cmb_post_summary',
-        'name' => 'Sumário (Obrigatório)',
-        'desc' => 'Adicione um resumo descritivo da publicação',
-        'type' => 'textarea_small',
-        'attributes' => ['required' => 'required'],
-        'options' => [
-            'textarea_rows' => 5
-        ],
-    ]);
+    $cmb->add_field(field: array(
+        'id' => 'products_group',
+        'type' => 'group',
+        'description' => 'Produtos Relacionados',
+        'repeatable' => true,
+        'options' => array(
+            'group_title' => esc_html__('Produto #{#} ', 'cmb2'),
+            'add_button' => esc_html__('Adicionar', 'cmb2'),
+            'remove_button' => esc_html__('Remover', 'cmb2'),
+            'sortable' => true,
+            'closed' => true,
+        ),
+        'fields' => array(
+            array(
+                'id' => 'product_view',
+                'name' => 'Exibir Produto',
+                'desc' => 'Exibir/Ocultar o produto da vitrine',
+                'type' => 'checkbox',
+            ),
+            array(
+                'id' => 'product_name',
+                'name' => 'Nome do Produto (obrigatório)',
+                'type' => 'text',
+                'attributes' => ['required' => 'required'],
+            ),
+            array(
+                'id' => 'product_url',
+                'name' => 'URL do Produto (obrigatório)',
+                'type' => 'text_url',
+                'attributes' => ['required' => 'required'],
+            ),
+            array(
+                'id' => 'product_image',
+                'name' => 'Imagem do Produto (obrigatório)',
+                'type' => 'file',
+                'attributes' => ['required' => 'required'],
+            ),
+            array(
+                'id' => 'product_price',
+                'name' => 'Preço do Produto (obrigatório)',
+                'type' => 'text_money',
+                'attributes' => ['required' => 'required'],
+            ),
+            array(
+                'id' => 'product_price_with_discount',
+                'name' => 'Preço do Produto com Desconto',
+                'type' => 'text_money',
+            ),
+            array(
+                'id' => 'product_installments',
+                'name' => 'Parcelas do Produto (obrigatório)',
+                'type' => 'text',
+                'attributes' => ['required' => 'required'],
+            ),
+        )
+    ));
 }
 
 add_action('cmb2_admin_init', 'set_post_metaboxes');
@@ -249,6 +312,12 @@ function set_theme_options()
             'closed' => true,
         ),
         'fields' => array(
+            array(
+                'id' => 'product_view',
+                'name' => 'Exibir Produto',
+                'desc' => 'Exibir/Ocultar o produto da vitrine',
+                'type' => 'checkbox',
+            ),
             array(
                 'id' => 'product_name',
                 'name' => 'Nome do Produto (obrigatório)',
