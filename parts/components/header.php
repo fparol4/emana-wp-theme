@@ -1,3 +1,7 @@
+<?php
+$header_links = cmb2_get_option('cmb_theme_options', 'header_group');
+?>
+
 <!-- header -->
 <header
     class="bg-primary-300 py-2 px-4 md:px-12 w-full h-[124px] flex justify-between md:justify-center items-center gap-16 relative">
@@ -8,8 +12,7 @@
     </div>
 
     <div class="hidden md:flex items-center flex-grow max-w-[40rem] relative">
-        <input
-            id="_search_input"
+        <input id="_search_input"
             class="w-full h-9 p-2 border border-gray-700 rounded-full placeholder-gray-700 focus:outline-none bg-transparent"
             type="text" name="name" placeholder='Buscar no Blog...' />
 
@@ -33,15 +36,11 @@
     </div>
 
     <div class="uppercase gap-6 hidden md:flex items-center text-xs">
-        <a href="#favoritos" class="items-center flex gap-2">
-            Quem Somos ?
-        </a>
-
-        <a href="#favoritos" class="items-center flex gap-2">
-            <span>
-                Prescritores
-            </span>
-        </a>
+        <?php foreach ($header_links as $link): ?>
+            <a class="items-center flex gap-2" href="<?php echo $link['header_link_url']; ?>">
+                <?php echo $link['header_link_text']; ?>
+            </a>
+        <?php endforeach; ?>
     </div>
 
     <div class="flex md:hidden justify-center items-center gap-4">
@@ -75,7 +74,8 @@
     <!-- sm_search_box -->
     <div id="sm_search_box"
         class="absolute opacity-0 w-[95%] py-5 top-[124px] z-10 inset-0 m-auto bg-primary-900 justify-center items-center shadow-lg | flex  invisible | ease-transition">
-        <input id="_sm_search_input" type="text" placeholder="Digite sua pesquisa..." class="w-[98%] h-8 pl-2 outline-none">
+        <input id="_sm_search_input" type="text" placeholder="Digite sua pesquisa..."
+            class="w-[98%] h-8 pl-2 outline-none">
     </div>
     <!-- sm_search_box -->
 
@@ -95,19 +95,14 @@
 
         <section id="side-content" class="flex flex-col min-h-[60%] justify-center items-center gap-8">
             <div id="side-links" class="flex flex-col items-center text-2xl font-medium gap-4">
-                <a href="#" class="hover:underline">Quem Somos</a>
-                <a href="#" class="hover:underline">Prescritores</a>
-                <a href="#" class="hover:underline">Outros</a>
+                <?php foreach ($header_links as $link): ?>
+                    <a class="hover:underline" href="<?php echo $link['header_link_url']; ?>">
+                        <?php echo $link['header_link_text']; ?>
+                    </a>
+                <?php endforeach; ?>
             </div>
             <div id="side-tags">
-                <div class="h-1/3 flex flex-col gap-2">
-                    <h3 class="text-lg font-bold text-center">Navegue pelas Tag's</h3>
-                    <div class="grid grid-cols-2 gap-2 text-lg">
-                        <a href="#" class="bg-slate-200 py-1 px-8 text-center hover:shadow-md">Saúde</a>
-                        <a href="#" class="bg-slate-200 py-1 px-8 text-center hover:shadow-md">Saúde</a>
-                        <a href="#" class="bg-slate-200 py-1 px-8 text-center hover:shadow-md">Saúde</a>
-                    </div>
-                </div>
+                <?php get_template_part('parts/components/tags-sm'); ?>
             </div>
         </section>
     </div>

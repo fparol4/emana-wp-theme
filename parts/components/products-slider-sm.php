@@ -34,7 +34,7 @@ foreach ($products as $product) {
 ?>
 
 <?php if (!empty($products_mapped)): ?>
-    <div class="w-full hidden md:flex">
+    <div class="flex md:hidden w-full">
         <div id="products-slider" class="swiper products-slider w-full flex gap-4 m-0">
             <div class="swiper-wrapper md:p-6">
                 <?php foreach ($products_mapped as $product): ?>
@@ -67,5 +67,4 @@ foreach ($products as $product) {
             <div class="swiper-scrollbar bottom-[-2px]"></div>
         </div>
     </div>
-
 <?php endif; ?>

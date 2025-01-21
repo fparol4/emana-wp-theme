@@ -251,6 +251,33 @@ function set_theme_options()
         'icon_url' => 'dashicons-palmtree',
     ));
 
+    $cmb->add_field(field: array(
+        'id' => 'header_group',
+        'type' => 'group',
+        'description' => 'Header - Links - Exibidos na lateral direita do Header & Mobile sidebar',
+        'repeatable' => true,
+        'options' => array(
+            'group_title' => esc_html__('Link #{#}', 'cmb2'), // {#} gets replaced by row number
+            'add_button' => esc_html__('Adicionar', 'cmb2'),
+            'remove_button' => esc_html__('Remover', 'cmb2'),
+            'sortable' => true,
+            'closed' => true,
+        ),
+        'fields' => array(
+            array(
+                'id' => 'header_link_text',
+                'name' => 'Texto do Link (obrigatório)',
+                'type' => 'text',
+                'attributes' => ['required' => 'required'],
+            ),
+            array(
+                'id' => 'header_link_url',
+                'name' => 'URL de Redirecionamento (obrigatório)',
+                'type' => 'text_url',
+                'attributes' => ['required' => 'required'],
+            )
+        )
+    ));
 
     /** @banners */
     $cmb->add_field(field: array(
