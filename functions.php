@@ -49,6 +49,22 @@ function redirect_empty_search()
 }
 add_action('template_redirect', 'redirect_empty_search');
 
+function set_custom_page_title($title) {
+    if (is_home() || is_front_page()) {
+        $title = 'Emana - Blog';
+    } elseif (is_single()) {
+        $post_name = get_page_link(); 
+        var_dump($post_name); 
+        $title = 'Emana - Post: ' . get_the_title();
+    } elseif (is_search()) {
+        $title = 'Emana - Pesquisa: ' . get_search_query();
+    } elseif (is_category()) {
+        $title = 'Emana - Tag: ' . single_cat_title('', false);
+    }
+    return $title;
+}
+add_filter('pre_get_document_title', 'set_custom_page_title');
+
 /** @custom-functions */
 function debug_console($payload)
 {
@@ -163,14 +179,12 @@ function set_post_metaboxes()
                 'name' => 'Banner (Obrigatório)',
                 'desc' => 'Faça o upload da imagem principal da publicação',
                 'type' => 'file',
-                'attributes' => ['required' => 'required']
             ),
             array(
                 'id' => 'cmb_post_summary',
                 'name' => 'Sumário (Obrigatório)',
                 'desc' => 'Adicione um resumo descritivo da publicação',
                 'type' => 'textarea_small',
-                'attributes' => ['required' => 'required'],
                 'options' => [
                     'textarea_rows' => 5
                 ],
@@ -193,33 +207,29 @@ function set_post_metaboxes()
         'fields' => array(
             array(
                 'id' => 'product_view',
-                'name' => 'Exibir Produto',
-                'desc' => 'Exibir/Ocultar o produto da vitrine',
+                'name' => 'Ocultar o Produto',
+                'desc' => 'Ocultar o produto da vitrine',
                 'type' => 'checkbox',
             ),
             array(
                 'id' => 'product_name',
                 'name' => 'Nome do Produto (obrigatório)',
                 'type' => 'text',
-                'attributes' => ['required' => 'required'],
             ),
             array(
                 'id' => 'product_url',
                 'name' => 'URL do Produto (obrigatório)',
                 'type' => 'text_url',
-                'attributes' => ['required' => 'required'],
             ),
             array(
                 'id' => 'product_image',
                 'name' => 'Imagem do Produto (obrigatório)',
                 'type' => 'file',
-                'attributes' => ['required' => 'required'],
             ),
             array(
                 'id' => 'product_price',
                 'name' => 'Preço do Produto (obrigatório)',
                 'type' => 'text_money',
-                'attributes' => ['required' => 'required'],
             ),
             array(
                 'id' => 'product_price_with_discount',
@@ -230,7 +240,6 @@ function set_post_metaboxes()
                 'id' => 'product_installments',
                 'name' => 'Parcelas do Produto (obrigatório)',
                 'type' => 'text',
-                'attributes' => ['required' => 'required'],
             ),
         )
     ));
@@ -268,13 +277,37 @@ function set_theme_options()
                 'id' => 'header_link_text',
                 'name' => 'Texto do Link (obrigatório)',
                 'type' => 'text',
-                'attributes' => ['required' => 'required'],
             ),
             array(
                 'id' => 'header_link_url',
                 'name' => 'URL de Redirecionamento (obrigatório)',
                 'type' => 'text_url',
-                'attributes' => ['required' => 'required'],
+            )
+        )
+    ));
+
+    $cmb->add_field(field: array(
+        'id' => 'nav_group',
+        'type' => 'group',
+        'description' => 'Navbar - Links - Exibidos abaixo do Header na versão Desktop',
+        'repeatable' => true,
+        'options' => array(
+            'group_title' => esc_html__('Link #{#}', 'cmb2'), // {#} gets replaced by row number
+            'add_button' => esc_html__('Adicionar', 'cmb2'),
+            'remove_button' => esc_html__('Remover', 'cmb2'),
+            'sortable' => true,
+            'closed' => true,
+        ),
+        'fields' => array(
+            array(
+                'id' => 'nav_link_text',
+                'name' => 'Texto do Link (obrigatório)',
+                'type' => 'text',
+            ),
+            array(
+                'id' => 'nav_link_url',
+                'name' => 'URL de Redirecionamento (obrigatório)',
+                'type' => 'text_url',
             )
         )
     ));
@@ -297,13 +330,11 @@ function set_theme_options()
                 'id' => 'cmb_home_banner',
                 'name' => 'Imagem (obrigatório)',
                 'type' => 'file',
-                'attributes' => ['required' => 'required'],
             ),
             array(
                 'id' => 'cmb_home_banner_url',
                 'name' => 'URL de Redirecionamento (obrigatório)',
                 'type' => 'text_url',
-                'attributes' => ['required' => 'required'],
             ),
             array(
                 'id' => 'cmb_home_only_banner',
@@ -341,33 +372,29 @@ function set_theme_options()
         'fields' => array(
             array(
                 'id' => 'product_view',
-                'name' => 'Exibir Produto',
-                'desc' => 'Exibir/Ocultar o produto da vitrine',
+                'name' => 'Ocultar o Produto',
+                'desc' => 'Ocultar o produto da vitrine',
                 'type' => 'checkbox',
             ),
             array(
                 'id' => 'product_name',
                 'name' => 'Nome do Produto (obrigatório)',
                 'type' => 'text',
-                'attributes' => ['required' => 'required'],
             ),
             array(
                 'id' => 'product_url',
                 'name' => 'URL do Produto (obrigatório)',
                 'type' => 'text_url',
-                'attributes' => ['required' => 'required'],
             ),
             array(
                 'id' => 'product_image',
                 'name' => 'Imagem do Produto (obrigatório)',
                 'type' => 'file',
-                'attributes' => ['required' => 'required'],
             ),
             array(
                 'id' => 'product_price',
                 'name' => 'Preço do Produto (obrigatório)',
                 'type' => 'text_money',
-                'attributes' => ['required' => 'required'],
             ),
             array(
                 'id' => 'product_price_with_discount',
@@ -378,7 +405,6 @@ function set_theme_options()
                 'id' => 'product_installments',
                 'name' => 'Parcelas do Produto (obrigatório)',
                 'type' => 'text',
-                'attributes' => ['required' => 'required'],
             ),
         )
     ));
@@ -396,13 +422,11 @@ function set_theme_options()
                 'id' => 'sidebar_banner_url',
                 'name' => 'Sidebar - Banner URL (obrigatório)',
                 'type' => 'text_url',
-                'attributes' => ['required' => 'required'],
             ),
             array(
                 'id' => 'sidebar_banner',
                 'name' => 'Sidebar - Banner (obrigatório)',
                 'type' => 'file',
-                'attributes' => ['required' => 'required'],
             )
         )
     ));
@@ -422,41 +446,6 @@ function set_message_callback($cmb, $args)
         add_settings_error($args['setting'], $args['code'], $args['message'], $args['type']);
     }
 }
-
-// function add_custom_metabox_to_posts() {
-//     $cmb = new_cmb2_box([
-//         'id'            => 'custom_post_metabox',
-//         'title'         => 'Custom Post Fields',
-//         'object_types'  => ['post'], // Attach to Posts
-//         'context'       => 'normal', // Position
-//         'priority'      => 'high',   // Priority
-//         'show_names'    => true,     // Display field names
-//     ]);
-
-//     $cmb->add_field([
-//         'name' => 'Subtitle',
-//         'id'   => 'post_subtitle',
-//         'type' => 'text',
-//     ]);
-
-//     $cmb->add_field([
-//         'name' => 'Featured URL',
-//         'id'   => 'featured_url',
-//         'type' => 'text_url',
-//     ]);
-
-//     $cmb->add_field([
-//         'name'    => 'Post Style',
-//         'id'      => 'post_style',
-//         'type'    => 'radio_inline',
-//         'options' => [
-//             'style1' => 'Style 1',
-//             'style2' => 'Style 2',
-//         ],
-//         'default' => 'style1',
-//     ]);
-// }
-// add_action('cmb2_admin_init', 'add_custom_metabox_to_posts');
 
 
 /** METABOX DEMO */

@@ -116,7 +116,7 @@ function set_search_keypress() {
         element.addEventListener('keypress', event => {
             var _search = element.value
             var _is_enter = event.key === 'Enter'
-            if (_search && _is_enter) win_redirect(`/?s=${_search}`)
+            if (_search && _is_enter) win_redirect(`/?s=${encodeURIComponent(_search)}`)
         })
     })
 

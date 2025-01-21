@@ -1,9 +1,11 @@
+<?php
+$nav_links = cmb2_get_option('cmb_theme_options', 'nav_group');
+?>
+
 <nav class="bg-primary-900 h-8 hidden md:flex items-center justify-center text-xs gap-4 md:gap-8">
-    <a href="#1">Navegue pela Loja</a>
-    <a href="#2">Ofertas</a>
-    <a href="#3">Nutrição e Bem-Estar</a>
-    <a href="#4">Performance e Energia</a>
-    <a href="#5">Relaxamento e Mente</a>
-    <a href="#6">Para Cada Um</a>
-    <a href="#7">Clube Emana</a>
+    <?php foreach ($nav_links as $link): ?>
+        <a href="<?php echo $link['nav_link_url']; ?>">
+            <?php echo $link['nav_link_text'] ?>
+        </a>
+    <?php endforeach; ?>
 </nav>

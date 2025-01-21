@@ -1,5 +1,9 @@
 <?php
-$post_id = get_query_var('p');
+
+$permalink = get_the_id();
+var_dump('hello',  $permalink );
+
+$post_id = 124;
 
 /** Get products from post | global defined */
 $products = empty($post_id) ?
@@ -8,7 +12,7 @@ $products = empty($post_id) ?
 
 $products_mapped = [];
 foreach ($products as $product) {
-    if (empty($product['product_view']))
+    if (!empty($product['product_view']))
         continue;
 
     $price = normalize_price($product['product_price']);
@@ -67,5 +71,4 @@ foreach ($products as $product) {
             <div class="swiper-scrollbar bottom-[-2px]"></div>
         </div>
     </div>
-
 <?php endif; ?>
