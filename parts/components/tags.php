@@ -3,7 +3,6 @@ $wp_categories = get_categories();
 $categories = array();
 
 foreach ($wp_categories as $category) {
-    // var_dump('term-id', $category->term_id); 
     if ($category->term_id === 1)
         continue;
     $category = array(

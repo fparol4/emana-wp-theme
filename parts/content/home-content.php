@@ -14,6 +14,8 @@ $query_args = [
 ];
 
 $posts = _query_posts($query_args)['posts'];
+// var_dump($posts[0]); 
+
 $first_posts = array_slice($posts, 0, $FIRST_SECTION_POSTS);
 $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
 ?>
@@ -83,7 +85,7 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
                             <img class="md:w-1/2 h-1/2 md:h-auto object-cover" src="<?php echo $post['banner']; ?>">
                             <div
                                 class="md:w-1/2  bg-slate-100 flex flex-col p-12 md:px-12 justify-center items-center gap-4 text-center">
-                                <h4 class="uppercase text-amber-800 font-bold">SAÚDE!</h4>
+                                <h4 class="uppercase text-amber-800 font-bold"><?php echo $post['category']; ?></h4>
                                 <p class="text-xl font-light"><?php echo $post['title']; ?></p>
                                 <a href="/?p=<?php echo $post['id'] ?>">
                                     <button class="uppercase bg-primary-900 rounded-lg px-3 py-2 text-xl">
@@ -110,7 +112,7 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
                     <img class="md:w-1/2 h-1/2 object-cover" src="<?php echo $post['banner']; ?>">
                     <div
                         class="md:w-1/2 bg-slate-100 flex flex-col p-12 md:px-12 justify-center items-center gap-4 text-center">
-                        <h4 class="uppercase text-amber-800 font-bold">SAÚDE!</h4>
+                        <h4 class="uppercase text-amber-800 font-bold"><?php echo $post['category']; ?></h4>
                         <p class="text-xl font-light"><?php echo $post['title']; ?></p>
                         <a href="/?p=<?php echo $post['id'] ?>">
                             <button class="uppercase bg-primary-900 rounded-lg px-3 py-2 text-xl">

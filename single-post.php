@@ -6,6 +6,7 @@
         'content' => get_the_content(), 
         'banner' => get_post_meta($post_id, 'cmb_post_banner', true),
         'summary' => get_post_meta($post_id, 'cmb_post_summary', true),
+        'products' => get_post_meta($post_id, 'products_group', true)
     ];
 ?>
 

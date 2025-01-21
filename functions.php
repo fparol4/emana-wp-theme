@@ -54,7 +54,6 @@ function set_custom_page_title($title) {
         $title = 'Emana - Blog';
     } elseif (is_single()) {
         $post_name = get_page_link(); 
-        var_dump($post_name); 
         $title = 'Emana - Post: ' . get_the_title();
     } elseif (is_search()) {
         $title = 'Emana - Pesquisa: ' . get_search_query();
@@ -81,18 +80,19 @@ function g_asset($asset)
 function _query_posts($query_args)
 {
     $query = new WP_Query($query_args);
-
-    // var_dump($query->found_posts); 
-
     $posts = [];
+   
     while ($query->have_posts()) {
         $query->the_post();
         $post_id = get_the_id();
+
+        $post_category = get_the_category()[0]->name; 
+
         $post = [
             'id' => $post_id,
             'title' => get_the_title(),
             'content' => get_the_content(),
-            'category' => get_the_category(),
+            'category' => $post_category, 
             'banner' => get_post_meta($post_id, 'cmb_post_banner', true),
             'summary' => get_post_meta($post_id, 'cmb_post_summary', true),
         ];
@@ -102,6 +102,38 @@ function _query_posts($query_args)
 
     wp_reset_postdata();
     return ['posts' => $posts, 'total' => $query->found_posts];
+}
+
+function map_products2slider($arguments) {
+    $global_products = cmb2_get_option('cmb_theme_options', 'products_group');
+
+    $products = $arguments['products'] ?? $global_products;
+    
+    $products_mapped = []; 
+    foreach ($products as $product) {
+        if (!empty($product['product_view'])) continue;
+    
+        $price = normalize_price($product['product_price']);
+        $price_with_discount = normalize_price($product['product_price_with_discount']);
+        $price2show = $price_with_discount ?: $price;
+    
+        $installments = $product['product_installments'];
+        $installment_price = number_format((float) ($price2show / $installments), 2);
+        $with_installments = 'Ou ' . $product['product_installments'] . 'x de R$ ' . $installment_price . ' sem juros';
+    
+        $product = array(
+            'name' => $product['product_name'],
+            'image' => $product['product_image'],
+            'url' => $product['product_url'],
+            'price' => $product['product_price'],
+            'price_with_discount' => $product['product_price_with_discount'],
+            'installments' => $product['installments'],
+            'with_installments' => $with_installments,
+        );
+    
+        $products_mapped[] = $product;
+    }
+    return $products_mapped; 
 }
 
 
