@@ -15,12 +15,16 @@ Author: Fabricio Parola
 @tailwind components;
 @tailwind utilities;
 
+body {
+    font-family: "Archivo", serif !important;
+    font-optical-sizing: auto;
+}
+
 @layer base {
     .flex-center {
         @apply flex justify-center items-center; 
     }
 }
-
 
 /* Custom CSS */
 ._scroll_lock {

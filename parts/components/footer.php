@@ -1,3 +1,10 @@
+<?php
+$footer_institutional_links = cmb2_get_option('cmb_theme_options', 'footer_institutional');
+$footer_links = cmb2_get_option('cmb_theme_options', 'footer_links');
+$footer_contacts = cmb2_get_option('cmb_theme_options', 'footer_contact')[0];
+
+?>
+
 <!-- footer -->
 <footer class="bg-primary-300 flex flex-col gap-4 items-center py-6">
     <!-- footer/info -->
@@ -12,55 +19,53 @@
         <div id="institucional">
             <h4 class="font-bold text-sm mb-2">Institucional</h4>
             <div class="text-sm flex flex-col gap-1">
-                <a href="">Quem Somos</a>
-                <a href="">Conteúdos</a>
-                <a href="">Produtos</a>
-                <a href="">Perguntas Frequentes</a>
-                <a href="">Onde Encontrar</a>
+                <?php foreach ($footer_institutional_links as $link): ?>
+                    <a href="<?php echo $link['footer_institutional_url']; ?>">
+                        <?php echo $link['footer_institutional_text']; ?>
+                    </a>
+                <?php endforeach; ?>
             </div>
         </div>
 
         <div id="links-uteis">
             <h4 class="font-bold text-sm mb-2">Links Úteis</h4>
             <div class="text-sm flex flex-col gap-1">
-                <a href="">Políticas de Devolução</a>
-                <a href="">Políticas de Privacidade</a>
-                <a href="">Políticas de Cookies</a>
-                <a href="">Políticas de Segurança da Informação</a>
-                <a href="">Gerencie seus Dados</a>
+                <?php foreach ($footer_links as $link): ?>
+                    <a href="<?php echo $link['footer_links_url']; ?>">
+                        <?php echo $link['footer_links_text']; ?>
+                    </a>
+                <?php endforeach; ?>
             </div>
         </div>
 
         <div id="contato">
             <h4 class="font-bold text-sm mb-2">Contato</h4>
             <div class="text-sm flex flex-col gap-1">
-                <a href="#email">sac@souemana.com.br</a>
-                <a href="#email" class="flex items-center gap-2">
+                <a href="mailto:<?php echo $footer_contacts['footer_email']; ?>">
+                    <?php echo $footer_contacts['footer_email']; ?>
+                </a>
+                <a href="https://wa.me/55<?php echo preg_replace('/\D/', '', $footer_contacts['footer_phone']); ?>"
+                    class="flex items-center gap-2">
                     <!-- whatsapp-svg -->
                     <svg width="12px" height="12px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink">
-
-                        <title>Whatsapp-color</title>
-                        <desc>Created with Sketch.</desc>
-                        <defs>
-
-                        </defs>
                         <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                             <g id="Color-" transform="translate(-700.000000, -360.000000)" fill="#67C15E">
                                 <path
                                     d="M723.993033,360 C710.762252,360 700,370.765287 700,383.999801 C700,389.248451 701.692661,394.116025 704.570026,398.066947 L701.579605,406.983798 L710.804449,404.035539 C714.598605,406.546975 719.126434,408 724.006967,408 C737.237748,408 748,397.234315 748,384.000199 C748,370.765685 737.237748,360.000398 724.006967,360.000398 L723.993033,360.000398 L723.993033,360 Z M717.29285,372.190836 C716.827488,371.07628 716.474784,371.034071 715.769774,371.005401 C715.529728,370.991464 715.262214,370.977527 714.96564,370.977527 C714.04845,370.977527 713.089462,371.245514 712.511043,371.838033 C711.806033,372.557577 710.056843,374.23638 710.056843,377.679202 C710.056843,381.122023 712.567571,384.451756 712.905944,384.917648 C713.258648,385.382743 717.800808,392.55031 724.853297,395.471492 C730.368379,397.757149 732.00491,397.545307 733.260074,397.27732 C735.093658,396.882308 737.393002,395.527239 737.971421,393.891043 C738.54984,392.25405 738.54984,390.857171 738.380255,390.560912 C738.211068,390.264652 737.745308,390.095816 737.040298,389.742615 C736.335288,389.389811 732.90737,387.696673 732.25849,387.470894 C731.623543,387.231179 731.017259,387.315995 730.537963,387.99333 C729.860819,388.938653 729.198006,389.89831 728.661785,390.476494 C728.238619,390.928051 727.547144,390.984595 726.969123,390.744481 C726.193254,390.420348 724.021298,389.657798 721.340985,387.273388 C719.267356,385.42535 717.856938,383.125756 717.448104,382.434484 C717.038871,381.729275 717.405907,381.319529 717.729948,380.938852 C718.082653,380.501232 718.421026,380.191036 718.77373,379.781688 C719.126434,379.372738 719.323884,379.160897 719.549599,378.681068 C719.789645,378.215575 719.62006,377.735746 719.450874,377.382942 C719.281687,377.030139 717.871269,373.587317 717.29285,372.190836 Z"
                                     id="Whatsapp">
-
                                 </path>
                             </g>
                         </g>
                     </svg>
                     <!-- whatsapp-svg -->
-                    <span>(11) 3813-0500</span>
+                    <span>
+                        <?php echo $footer_contacts['footer_phone']; ?>
+                    </span>
                 </a>
                 <span class="text-base font-bold mt-4">Siga-nos nas redes</span>
                 <div class="w-full flex gap-4 items-center">
-                    <a href="">
+                    <a href="<?php echo $footer_contacts['footer_youtube']; ?>">
                         <!-- youtube-svg -->
                         <svg width="27" height="20" viewBox="0 0 27 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -70,7 +75,7 @@
                         <!-- youtube-svg -->
                     </a>
 
-                    <a href="">
+                    <a href="<?php echo $footer_contacts['footer_tiktok']; ?>">
                         <!-- tick-tock-svg -->
                         <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -80,7 +85,7 @@
                         <!-- tick-tock-svg -->
                     </a>
 
-                    <a href="">
+                    <a href="<?php echo $footer_contacts['footer_facebook']; ?>">
                         <!-- facebook-svg -->
                         <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="1.08289" y="1.375" width="23.5249" height="23.5249" rx="1" stroke="#010101"
@@ -92,7 +97,7 @@
                         <!-- facebook-svg -->
                     </a>
 
-                    <a href="">
+                    <a href="<?php echo $footer_contacts['footer_instagram']; ?>">
                         <!-- instagram-svg -->
                         <svg width="32px" height="32px" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">

@@ -33,27 +33,33 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
                         <!-- When banner has only image -->
                         <?php if ($banner['cmb_home_only_banner']): ?>
                             <div class="h-full md:h-auto swiper-slide flex flex-col md:flex-row">
-                                <a class="w-full h-full md:h-auto" href="<?php echo $banner['cmb_home_banner_url'] ?>">
-                                    <img class="w-full h-full md:h-auto object-cover" src="<?php echo $banner['cmb_home_banner'] ?>">
+                                <a class="block md:hidden w-full h-full md:h-auto"
+                                    href="<?php echo $banner['cmb_home_banner_url'] ?>">
+                                    <img class="w-full h-full object-cover" src="<?php echo $banner['cmb_home_banner_sm'] ?? $banner['cmb_home_banner'] ?>">
+                                </a>
+                                <a class="hidden md:block w-full h-full md:h-auto"
+                                    href="<?php echo $banner['cmb_home_banner_url'] ?>">
+                                    <img class="w-full h-full object-cover" src="<?php echo $banner['cmb_home_banner'] ?>">
                                 </a>
                             </div>
                         <?php else: ?>
                             <!-- When banner is complete -->
                             <div class="swiper-slide flex flex-col md:flex-row">
-                                    <img class="md:w-1/2 h-1/2 md:h-auto object-cover" src="<?php echo $banner['cmb_home_banner'] ?>">
-                                    <div
-                                        class="md:w-1/2 h-full bg-slate-100 flex flex-col p-12 md:px-12 justify-center items-center gap-4 text-center">
-                                        <h4 class="uppercase text-amber-800 font-bold swiper-no-swiping">
-                                            <?php echo $banner['cmb_home_banner_title'] ?>
-                                        </h4>
-                                        <p class="text-2xl font-light swiper-no-swiping">
-                                            <?php echo $banner['cmb_home_banner_subtitle'] ?>
-                                        </p>
-                                        <a href="<?php echo $banner['cmb_home_banner_url'] ?>">
-                                            <button class="uppercase bg-primary-900 rounded-lg px-3 py-2 text-xl">leia
-                                                mais</button>
-                                        </a>
-                                    </div>
+                                <img class="md:w-1/2 h-1/2 md:h-auto object-cover"
+                                    src="<?php echo $banner['cmb_home_banner'] ?>">
+                                <div
+                                    class="md:w-1/2 h-full bg-slate-100 flex flex-col p-12 md:px-12 justify-center items-center gap-4 text-center">
+                                    <h4 class="uppercase text-amber-800 font-bold swiper-no-swiping">
+                                        <?php echo $banner['cmb_home_banner_title'] ?>
+                                    </h4>
+                                    <p class="text-2xl font-light swiper-no-swiping">
+                                        <?php echo $banner['cmb_home_banner_subtitle'] ?>
+                                    </p>
+                                    <a href="<?php echo $banner['cmb_home_banner_url'] ?>">
+                                        <button class="uppercase bg-primary-900 rounded-lg px-3 py-2 text-xl">leia
+                                            mais</button>
+                                    </a>
+                                </div>
                             </div>
                         <?php endif; ?>
                     <?php endforeach; ?>
@@ -64,7 +70,7 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
 
         <!-- @sm-product-slider -->
         <div class="flex md:hidden w-full">
-            <?php get_template_part('/parts/components/products-slider'); ?>
+            <?php get_template_part('/parts/components/products-slider-sm'); ?>
         </div>
 
         <!-- content/grid_1 -->

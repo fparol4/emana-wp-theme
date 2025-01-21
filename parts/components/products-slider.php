@@ -4,18 +4,18 @@ $products_mapped = map_products2slider($args);
 
 <?php if (!empty($products_mapped)): ?>
     <div class="w-full hidden md:flex">
-        <div id="products-slider" class="swiper products-slider w-full flex gap-4 m-0">
+        <div id="products-slider" class="swiper products-slider w-full flex gap-4 m-0 py-4">
             <div class="swiper-wrapper md:p-6">
                 <?php foreach ($products_mapped as $product): ?>
                     <div class="swiper-slide product">
                         <div class="w-full">
-                            <div class="h-64">
+                            <div class="h-36">
                                 <a href="<?php echo $product['url'] ?>">
                                     <img class="w-full h-full object-cover" src="<?php echo $product['image']; ?>">
                                 </a>
                             </div>
-                            <div class="h-40 flex flex-col justify-between items-center gap-3 mt-4 swiper-no-swiping">
-                                <span id="product-title" class="text-xl"><?php echo $product['name']; ?></span>
+                            <div class="min-h-[200px] flex flex-col justify-between items-center gap-3 mt-4 swiper-no-swiping">
+                                <span id="product-title" class="text-xl text-center"><?php echo $product['name']; ?></span>
                                 <div class="flex flex-col justify-center items-center">
                                     <?php if (empty($product['price_with_discount'])): ?>
                                         <span>R$ <?php echo $product['price']; ?></span>

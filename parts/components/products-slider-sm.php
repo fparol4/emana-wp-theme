@@ -4,7 +4,7 @@ $products_mapped = map_products2slider($args);
 
 <?php if (!empty($products_mapped)): ?>
     <div class="flex md:hidden w-full">
-        <div id="products-slider" class="swiper products-slider w-full flex gap-4 m-0">
+        <div id="products-slider" class="swiper products-slider w-full flex gap-4 m-0 py-4">
             <div class="swiper-wrapper md:p-6">
                 <?php foreach ($products_mapped as $product): ?>
                     <div class="swiper-slide product">
