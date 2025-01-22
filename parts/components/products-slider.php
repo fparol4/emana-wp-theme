@@ -11,7 +11,7 @@ $products_mapped = map_products2slider($args);
                         <div class="w-full">
                             <div class="h-36">
                                 <a href="<?php echo $product['url'] ?>">
-                                    <img class="w-full h-full object-cover" src="<?php echo $product['image']; ?>">
+                                    <img alt="Imagem do Produto" class="w-full h-full object-cover" src="<?php echo $product['image']; ?>">
                                 </a>
                             </div>
                             <div class="min-h-[200px] flex flex-col justify-between items-center gap-3 mt-4 swiper-no-swiping">

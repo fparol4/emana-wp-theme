@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "css:develop": "postcss ./tailwind.css -o ./style.css --watch",
-    "css:build": "csso ./style.css --output ./style.css"
+    "css:build": "tailwind ./tailwind.css -o ./style.css --minify"
   },
   "author": "Fabricio Parola",
   "license": "ISC",

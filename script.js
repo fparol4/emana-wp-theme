@@ -72,20 +72,19 @@ function _toggle_pg_scroll() {
 
 var _load_more_offset = 3;
 async function _load_more_posts() {
-    var _load_limit = 1;
+    var _load_limit = 1; //@TODO 
     var _remaining_posts_box = document.querySelector('#remaining-posts');
     var base_url = `?rest_route=/api/posts&offset=${_load_more_offset}&limit=${_load_limit}`;
     var { posts, total_posts } = await fetch(base_url)
         .then(response => response.json());
 
     var posts_html = posts.reduce((p, c) => {
-        var [_post_category] = c.category
         var _post_html = `
             <div id="r-post" class="flex flex-col md:flex-row shadow-md">
                 <img class="md:w-1/2 object-cover" src="${c.banner}">
                 <div
                     class="md:w-1/2  bg-slate-100 flex flex-col p-12 md:px-12 justify-center items-center gap-4 text-center">
-                    <h4 class="uppercase text-amber-800 font-bold">${_post_category.name}</h4>
+                    <h4 class="uppercase text-amber-800 font-bold">${c.category}</h4>
                     <p class="text-xl font-light">${c.title}</p>
                     <a href="/?p=${c.id}">
                         <button class="uppercase bg-primary-900 rounded-lg px-3 py-2 text-xl">Leia mais</button>
@@ -137,12 +136,12 @@ function set_search_keypress() {
 /** Swiper */
 function set_swiper() {
     new Swiper('.top-header-swiper', {
-        // autoplay: { delay: 1000 },
+        autoplay: { delay: 3000 },
         spaceBetween: 100
     });
 
     new Swiper('.banner-carroussel', {
-        // autoplay: { delay: 1000 },
+        autoplay: { delay: 5000 },
         loop: true,
         pagination: {
             el: '.banner_swp-pagination',

@@ -8,7 +8,7 @@ $post = $args['post'];
 
         <!-- content/banner -->
         <div class="-mt-7 flex flex-col items-center">
-            <img class="w-full object-cover" src="<?php echo $post['banner']; ?>">
+            <img alt="Banner da Publicação" class="w-full object-cover" src="<?php echo $post['banner']; ?>">
             <div class="w-full flex flex-col gap-4 mt-4 leading-tight">
                 <h2 class="text-2xl font-semibold"><?php echo $post['title'] ?></h2>
                 <p class="whitespace-pre-line font-light"><?php echo $post['summary']; ?></p>

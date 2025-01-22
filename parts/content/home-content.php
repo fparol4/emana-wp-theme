@@ -35,17 +35,17 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
                             <div class="h-full md:h-auto swiper-slide flex flex-col md:flex-row">
                                 <a class="block md:hidden w-full h-full md:h-auto"
                                     href="<?php echo $banner['cmb_home_banner_url'] ?>">
-                                    <img class="w-full h-full object-cover" src="<?php echo $banner['cmb_home_banner_sm'] ?? $banner['cmb_home_banner'] ?>">
+                                    <img alt="Banner da Principal" class="w-full h-full object-cover" src="<?php echo $banner['cmb_home_banner_sm'] ?? $banner['cmb_home_banner'] ?>">
                                 </a>
                                 <a class="hidden md:block w-full h-full md:h-auto"
                                     href="<?php echo $banner['cmb_home_banner_url'] ?>">
-                                    <img class="w-full h-full object-cover" src="<?php echo $banner['cmb_home_banner'] ?>">
+                                    <img alt="Banner da Principal" class="w-full h-full object-cover" src="<?php echo $banner['cmb_home_banner'] ?>">
                                 </a>
                             </div>
                         <?php else: ?>
                             <!-- When banner is complete -->
                             <div class="swiper-slide flex flex-col md:flex-row">
-                                <img class="md:w-1/2 h-1/2 md:h-auto object-cover"
+                                <img alt="Banner da Principal" class="md:w-1/2 h-1/2 md:h-auto object-cover"
                                     src="<?php echo $banner['cmb_home_banner'] ?>">
                                 <div
                                     class="md:w-1/2 h-full bg-slate-100 flex flex-col p-12 md:px-12 justify-center items-center gap-4 text-center">
@@ -88,7 +88,7 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
                 <div class="h-2/3 flex flex-col gap-8">
                     <?php foreach ($first_posts as $post): ?>
                         <div class="h-[536px] md:h-auto flex flex-col md:flex-row shadow-md">
-                            <img class="md:w-1/2 h-1/2 md:h-auto object-cover" src="<?php echo $post['banner']; ?>">
+                            <img alt="Banner da Secundário" class="md:w-1/2 h-1/2 md:h-auto object-cover" src="<?php echo $post['banner']; ?>">
                             <div
                                 class="md:w-1/2  bg-slate-100 flex flex-col p-12 md:px-12 justify-center items-center gap-4 text-center">
                                 <h4 class="uppercase text-amber-800 font-bold"><?php echo $post['category']; ?></h4>
