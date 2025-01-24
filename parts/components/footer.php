@@ -117,9 +117,7 @@ $footer_contacts = cmb2_get_option('cmb_theme_options', 'footer_contact')[0];
     <!-- footer/end -->
     <div class="w-full max-w-5xl flex flex-col md:flex-row gap-4 justify-center items-center">
         <p class="text-sm  font-light text-center">
-            iStoque Distribuidora e Logística LTDA CNPJ 37.264.663/0001-23 -Rua Kanebo, 175, Distrito industrial,
-            Jundiaí -
-            SP, 13.213-090 © 2024 - Laticinios Bela Vista S.A. Todos os direitos reservados.
+        A Loja Emana é operada pela iStoque Distribuidora e Logística LTDA CNPJ 37.264.663/0001-23 -Rua Kanebo, 175, Distrito Industrial, Jundiaí - SP, 13.213-090 © 2024 - Laticínios Bela Vista S.A. Todos os direitos reservados.​
         </p>
         <img class="w-[180px]" src="<?php g_asset('/piracanjuba.png') ?>" alt="Logo do Grupo Piracanjuba">
     </div>

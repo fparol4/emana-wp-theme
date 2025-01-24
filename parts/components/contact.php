@@ -46,3 +46,5 @@
     <!-- contact/email -->
 
 </section>
+
+<?php get_template_part('parts/components/nav'); ?>

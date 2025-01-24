@@ -151,13 +151,13 @@ function set_swiper() {
 
     new Swiper('.products-slider', {
         slidesPerView: 1,
-        spaceBetween: 20,
         scrollbar: {
             el: '.swiper-scrollbar',
         },
         breakpoints: {
             768: {
                 slidesPerView: 3,
+                centered: true, 
             }
         }
     })
