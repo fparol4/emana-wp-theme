@@ -14,7 +14,6 @@ $query_args = [
 ];
 
 $posts = _query_posts($query_args)['posts'];
-// var_dump($posts[0]); 
 
 $first_posts = array_slice($posts, 0, $FIRST_SECTION_POSTS);
 $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);

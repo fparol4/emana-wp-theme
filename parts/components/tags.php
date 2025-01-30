@@ -21,7 +21,7 @@ foreach ($wp_categories as $category) {
         <div class="grid grid-cols-2 gap-2 text-sm">
             <?php foreach ($categories as $category): ?>
                 <a href="<?php echo $category['url'] ?>" class="bg-slate-200 py-1 px-2 
-                    flex items-center justify-center text-center">
+                    flex items-center justify-center text-center text-xs">
                     <?php echo $category['name'] ?>
                 </a>
             <?php endforeach; ?>

@@ -44,6 +44,20 @@ $footer_contacts = cmb2_get_option('cmb_theme_options', 'footer_contact')[0];
                 <a href="mailto:<?php echo $footer_contacts['footer_email']; ?>">
                     <?php echo $footer_contacts['footer_email']; ?>
                 </a>
+
+                <a href="https://wa.me/55<?php echo preg_replace('/\D/', '', $footer_contacts['footer_phone']); ?>"
+                    class="flex items-center gap-2">
+                    <!-- whatsapp-svg -->
+                    <svg width="12px" height="12px" viewBox="0 0 16 16" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 5V1H7V5L4.5 7.5L8.5 11.5L11 9H15V15H11C5.47715 15 1 10.5228 1 5Z" fill="#000000" />
+                    </svg>
+                    <!-- whatsapp-svg -->
+                    <span>
+                        <?php echo $footer_contacts['footer_phone']; ?>
+                    </span>
+                </a>
+
                 <a href="https://wa.me/55<?php echo preg_replace('/\D/', '', $footer_contacts['footer_phone']); ?>"
                     class="flex items-center gap-2">
                     <!-- whatsapp-svg -->
@@ -60,9 +74,12 @@ $footer_contacts = cmb2_get_option('cmb_theme_options', 'footer_contact')[0];
                     </svg>
                     <!-- whatsapp-svg -->
                     <span>
-                        <?php echo $footer_contacts['footer_phone']; ?>
+                        <?php echo $footer_contacts['footer_whatsapp']; ?>
                     </span>
                 </a>
+
+
+
                 <span class="text-base font-bold mt-4">Siga-nos nas redes</span>
                 <div class="w-full flex gap-4 items-center">
                     <a href="<?php echo $footer_contacts['footer_youtube']; ?>">
@@ -117,7 +134,9 @@ $footer_contacts = cmb2_get_option('cmb_theme_options', 'footer_contact')[0];
     <!-- footer/end -->
     <div class="w-full max-w-5xl flex flex-col md:flex-row gap-4 justify-center items-center">
         <p class="text-sm  font-light text-center">
-        A Loja Emana é operada pela iStoque Distribuidora e Logística LTDA CNPJ 37.264.663/0001-23 -Rua Kanebo, 175, Distrito Industrial, Jundiaí - SP, 13.213-090 © 2024 - Laticínios Bela Vista S.A. Todos os direitos reservados.​
+            A Loja Emana é operada pela iStoque Distribuidora e Logística LTDA CNPJ 37.264.663/0001-23 -Rua Kanebo, 175,
+            Distrito Industrial, Jundiaí - SP, 13.213-090 © 2024 - Laticínios Bela Vista S.A. Todos os direitos
+            reservados.​
         </p>
         <img class="w-[180px]" src="<?php g_asset('/piracanjuba.png') ?>" alt="Logo do Grupo Piracanjuba">
     </div>

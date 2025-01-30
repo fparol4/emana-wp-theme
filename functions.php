@@ -115,7 +115,7 @@ function map_products2slider($arguments)
         if (!empty($product['product_view']))
             continue;
 
-        $price = normalize_price($product['product_price']);
+        $price = normalize_price(price: $product['product_price']);
         $price_with_discount = normalize_price($product['product_price_with_discount']);
         $price2show = $price_with_discount ?: $price;
 
@@ -178,7 +178,7 @@ add_action('rest_api_init', 'set_posts_route');
 
 function normalize_price($price)
 {
-    $normalized = str_replace([','], [''], $price);
+    $normalized = str_replace(['.', ','], ['', '.'], $price);
     return (float) $normalized;
 }
 
@@ -577,6 +577,11 @@ function set_theme_options()
             array(
                 'id' => 'footer_phone',
                 'name' => 'Telefone de Contato (obrigatório)',
+                'type' => 'text',
+            ),
+            array(
+                'id' => 'footer_whatsapp',
+                'name' => 'Whatsapp de Contato (obrigatório)',
                 'type' => 'text',
             ),
             array(
