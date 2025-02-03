@@ -540,8 +540,17 @@ video {
 .inset-0{
   inset: 0px !important;
 }
+.-bottom-\[24px\]{
+  bottom: -24px !important;
+}
+.-top-16{
+  top: -4rem !important;
+}
 .bottom-\[-2px\]{
   bottom: -2px !important;
+}
+.right-0{
+  right: 0px !important;
 }
 .right-4{
   right: 1rem !important;
@@ -558,47 +567,14 @@ video {
 .top-\[124px\]{
   top: 124px !important;
 }
-.right-0{
-  right: 0px !important;
-}
-.bottom-0{
-  bottom: 0px !important;
-}
-.bottom-10{
-  bottom: 2.5rem !important;
-}
-.-bottom-\[16px\]{
-  bottom: -16px !important;
-}
-.-bottom-\[24px\]{
-  bottom: -24px !important;
-}
-.top-10{
-  top: 2.5rem !important;
-}
-.-top-10{
-  top: -2.5rem !important;
-}
-.-top-20{
-  top: -5rem !important;
-}
-.-top-16{
-  top: -4rem !important;
-}
 .z-10{
   z-index: 10 !important;
-}
-.z-20{
-  z-index: 20 !important;
 }
 .m-0{
   margin: 0px !important;
 }
 .m-auto{
   margin: auto !important;
-}
-.-mt-28{
-  margin-top: -7rem !important;
 }
 .-mt-7{
   margin-top: -1.75rem !important;
@@ -705,6 +681,9 @@ video {
 .w-\[28px\]{
   width: 28px !important;
 }
+.w-\[90\%\]{
+  width: 90% !important;
+}
 .w-\[95\%\]{
   width: 95% !important;
 }
@@ -720,8 +699,8 @@ video {
 .w-lvw{
   width: 100lvw !important;
 }
-.w-\[90\%\]{
-  width: 90% !important;
+.min-w-52{
+  min-width: 13rem !important;
 }
 .max-w-5xl{
   max-width: 64rem !important;
@@ -903,10 +882,6 @@ video {
   padding-top: 2rem !important;
   padding-bottom: 2rem !important;
 }
-.py-4{
-  padding-top: 1rem !important;
-  padding-bottom: 1rem !important;
-}
 .pb-24{
   padding-bottom: 6rem !important;
 }
@@ -1045,7 +1020,8 @@ body {
     transition: 0.3s;
 }
 
-.banner_swp-pagination, .products-slider-pagination{
+.banner_swp-pagination,
+.products-slider-pagination{
   display: flex;
   justify-content: flex-end;
   padding-right: 1.5rem;
@@ -1066,23 +1042,31 @@ body {
 }
 
 #post-content{
-  white-space: break-spaces; 
+  white-space: break-spaces;
 
-    h1, h2, h3{
+    h1,
+    h2,
+    h3{
     font-size: 1.5rem;
     line-height: 2rem;
-  } 
+  }
 
-    h1, h2, h3{
+    h1,
+    h2,
+    h3{
     font-weight: 600;
   }
 
-    h4, h5, h6{
+    h4,
+    h5,
+    h6{
     font-size: 1.25rem;
     line-height: 1.75rem;
   }
 
-    h4, h5, h6{
+    h4,
+    h5,
+    h6{
     font-weight: 600;
   }
 
@@ -1099,17 +1083,17 @@ body {
   }
 }
 
-#_contact_hidden_wrapper { 
-    display: grid; 
+#_contact_hidden_wrapper {
+    display: grid;
     grid-template-rows: 0fr;
-    transition: all 500ms ease; 
+    transition: all 500ms ease;
 }
 
-#_contact_hidden_wrapper.show { 
+#_contact_hidden_wrapper.show {
     grid-template-rows: 1fr;
 }
 
-#_contact_hidden_form { 
+#_contact_hidden_form {
     overflow: hidden;
 }
 
@@ -1156,32 +1140,99 @@ body {
   }
 }
 
-#contact-section {
-    /* background-image: url("/wp-content/themes/emana-blog/assets/emana-contact-vector.png");
-    background-repeat: no-repeat; 
-    background-position: 98% 0; */
-}
+/** navbar **/
+._nav_item {
+    &::before { /** add a larger hitbox */
+        content: '';
+        position: absolute; 
+        top: 100%; 
+        width: 100%; 
+        height: 20px; 
+    }
 
+    &:hover {
+        color: #6C5527; 
+
+        svg {
+            transform: rotate(180deg);
+            fill: #6C5527; 
+        }
+
+        ._nav_subitems {
+            visibility: visible; 
+        }
+    }
+
+    ._nav_subitems{
+    position: absolute;
+  }
+
+    ._nav_subitems{
+    display: flex;
+  }
+
+    ._nav_subitems{
+    flex-direction: column;
+  }
+
+    ._nav_subitems{
+    border-radius: 0.125rem;
+  }
+
+    ._nav_subitems{
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 255 170 / var(--tw-bg-opacity, 1));
+  }
+
+    ._nav_subitems{
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+    ._nav_subitems{
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+    ._nav_subitems{
+    --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  }
+
+    ._nav_subitems {
+        top: 120%; /** to gap **/
+        visibility: hidden;
+        gap: 12px;
+        display: grid;
+        -moz-column-gap: 2.5rem;
+             column-gap: 2.5rem;
+        grid-auto-flow: column;
+        grid-template-rows: repeat(5, auto);
+    }
+
+    ._nav_subitem {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
 .hover\:underline:hover{
   text-decoration-line: underline !important;
 }
-
 .hover\:shadow-md:hover{
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color) !important;
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
 }
-
 .focus\:outline-none:focus{
   outline: 2px solid transparent !important;
   outline-offset: 2px !important;
 }
-
 .disabled\:bg-gray-400:disabled{
   --tw-bg-opacity: 1 !important;
   background-color: rgb(156 163 175 / var(--tw-bg-opacity, 1)) !important;
 }
-
 @media (min-width: 768px){
 
   .md\:visible{
@@ -1267,5 +1318,4 @@ body {
     text-align: start !important;
   }
 }
-
 

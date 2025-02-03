@@ -13,7 +13,7 @@ function show_toast(message, options = {}) {
         duration: 3000,
         style: { background: "linear-gradient(to right, #00b09b, #96c93d)" },
         ...options
-    }).showToast(); 
+    }).showToast();
 }
 
 /** _sm_search-bar */
@@ -157,7 +157,7 @@ function set_swiper() {
         breakpoints: {
             768: {
                 slidesPerView: 3,
-                centered: true, 
+                centered: true,
             }
         }
     })
@@ -195,7 +195,7 @@ function _handle_form_submit() {
 
     log('[IMPLEMENT] - Add newsletter call', _payload)
     show_toast('Cadastro realizado com sucesso ;)')
-    _contact_form_btn.disabled = true; 
+    _contact_form_btn.disabled = true;
 }
 
 
@@ -208,11 +208,40 @@ function setup_home_form() {
     VMasker(_contact_phone_input).maskPattern('(99) 99999-9999')
 }
 
+/** navbar-positioning */
+function setup_nav_positioning() {
+    function _set_nav_subitems_position(_nav_item) {
+        console.log(_nav_item)
+        var _nav_subitems = _nav_item.querySelector('._nav_subitems')
+        if (!_nav_subitems) return 
 
+        var _box_pos = _nav_subitems.getBoundingClientRect();
+
+        if (_box_pos.right > window.innerWidth) {
+            log('will remove')
+            _nav_subitems.style.left = 'auto'
+            _nav_subitems.style.right = '0'
+        } 
+    }
+
+    var _nav_items = document.querySelectorAll('._nav_item')
+    _nav_items.forEach(item => item.addEventListener('mouseenter', _set_nav_subitems_position(item)))
+}
+
+function safe_execute(fn) {
+    try {
+        fn();
+    } catch {
+        log(`error executing '${fn.name}'`)
+    }
+}
 
 window.onload = () => {
-    set_swiper();
-    set_search_keypress();
-    set_open_contact();
-    setup_home_form();
+    safe_execute(set_swiper);
+    safe_execute(set_search_keypress);
+    safe_execute(set_open_contact);
+    safe_execute(setup_home_form);
+    safe_execute(setup_nav_positioning);
 }
+
+console.log('Helloworld - END')

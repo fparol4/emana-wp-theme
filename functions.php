@@ -352,7 +352,9 @@ function set_theme_options()
         )
     ));
 
-    $cmb->add_field(field: array(
+
+    /** nav_group */
+    $nav_group = $cmb->add_field(field: array(
         'id' => 'nav_group',
         'type' => 'group',
         'description' => 'Navbar - Links - Exibidos abaixo do Header na versão Desktop',
@@ -364,19 +366,55 @@ function set_theme_options()
             'sortable' => true,
             'closed' => true,
         ),
-        'fields' => array(
-            array(
-                'id' => 'nav_link_text',
-                'name' => 'Texto do Link (obrigatório)',
-                'type' => 'text',
-            ),
-            array(
-                'id' => 'nav_link_url',
-                'name' => 'URL de Redirecionamento (obrigatório)',
-                'type' => 'text_url',
-            )
-        )
     ));
+
+    $cmb->add_group_field($nav_group, array(
+        'id' => 'navitem_text',
+        'name' => 'Texto do Link (obrigatório)',
+        'type' => 'text',
+    ));
+
+    $cmb->add_group_field($nav_group, array(
+        'id' => 'navitem_url',
+        'name' => 'URL de Redirecionamento (obrigatório)',
+        'type' => 'text_url',
+    ));
+
+    $cmb->add_group_field($nav_group, array(
+        'id' => 'navitem_subgroup',
+        'name' => 'Sub-Links (um por linha)',
+        'type' => 'text',
+        'repeatable' => true,
+    ));
+
+    // $nested_group = $cmb->add_group_field($nav_group, array(
+    //     'id'          => 'navitem_subgroup',
+    //     'type'        => 'group',
+    //     'description' => 'Sub-Links do item',
+    //     'options'     => array(
+    //         'group_title'   => esc_html__('Sub-Link #{#}', 'cmb2'), // {#} gets replaced by row number
+    //         'add_button'    => esc_html__('Adicionar', 'cmb2'),
+    //         'remove_button' => esc_html__('Remover', 'cmb2'),
+    //         'sortable'      => true,
+    //         'closed'        => true,
+    //     ),
+    // ));
+
+    /** > nav_group < */
+
+
+    // $nested_group_id = $cmb->add_group_field('nav_group', array(
+    //     'id' => 'navitem_subgroup',
+    //     'type' => 'group',
+    //     'description' => 'Sub-Links do item',
+    //     'options' => array(
+    //         'group_title' => esc_html__('Sub-Link #{#}', 'cmb2'), // {#} gets replaced by row number
+    //         'add_button' => esc_html__('Adicionar', 'cmb2'),
+    //         'remove_button' => esc_html__('Remover', 'cmb2'),
+    //         'sortable' => true,
+    //         'closed' => true,
+    //     ),
+    // ));
 
     /** @banners */
     $cmb->add_field(field: array(

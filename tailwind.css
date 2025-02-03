@@ -22,7 +22,7 @@ body {
 
 @layer base {
     .flex-center {
-        @apply flex justify-center items-center; 
+        @apply flex justify-center items-center;
     }
 }
 
@@ -46,7 +46,8 @@ body {
     transition: 0.3s;
 }
 
-.banner_swp-pagination, .products-slider-pagination {
+.banner_swp-pagination,
+.products-slider-pagination {
     @apply flex justify-end pr-6 pb-4;
 
     .swiper-pagination-bullet {
@@ -55,38 +56,42 @@ body {
 }
 
 #post-content {
-    @apply whitespace-break-spaces; 
+    @apply whitespace-break-spaces;
 
-    h1, h2, h3 { 
-        @apply text-2xl font-semibold; 
+    h1,
+    h2,
+    h3 {
+        @apply text-2xl font-semibold;
     }
 
-    h4, h5, h6 { 
-        @apply text-xl font-semibold; 
+    h4,
+    h5,
+    h6 {
+        @apply text-xl font-semibold;
     }
 
     .aligncenter {
-        @apply flex justify-center items-center; 
+        @apply flex justify-center items-center;
     }
 }
 
-#_contact_hidden_wrapper { 
-    display: grid; 
+#_contact_hidden_wrapper {
+    display: grid;
     grid-template-rows: 0fr;
-    transition: all 500ms ease; 
+    transition: all 500ms ease;
 }
 
-#_contact_hidden_wrapper.show { 
+#_contact_hidden_wrapper.show {
     grid-template-rows: 1fr;
 }
 
-#_contact_hidden_form { 
+#_contact_hidden_form {
     overflow: hidden;
 }
 
 #_contact_form {
-    input[type="text"] { 
-        @apply bg-primary-300 w-full h-12 p-2 pl-6 rounded-full placeholder-gray-700 focus:outline-none; 
+    input[type="text"] {
+        @apply bg-primary-300 w-full h-12 p-2 pl-6 rounded-full placeholder-gray-700 focus:outline-none;
     }
 
     label {
@@ -94,10 +99,44 @@ body {
     }
 }
 
-#contact-section {
-    /* background-image: url("/wp-content/themes/emana-blog/assets/emana-contact-vector.png");
-    background-repeat: no-repeat; 
-    background-position: 98% 0; */
-}
+/** navbar **/
+._nav_item {
+    &::before { /** add a larger hitbox */
+        content: '';
+        position: absolute; 
+        top: 100%; 
+        width: 100%; 
+        height: 20px; 
+    }
 
+    &:hover {
+        color: theme('colors.brown-300'); 
+
+        svg {
+            transform: rotate(180deg);
+            fill: theme('colors.brown-300'); 
+        }
+
+        ._nav_subitems {
+            visibility: visible; 
+        }
+    }
+
+    ._nav_subitems {
+        @apply absolute flex flex-col bg-primary-600 px-6 py-2 rounded-sm shadow-md;
+        top: 120%; /** to gap **/
+        visibility: hidden;
+        gap: 12px;
+        display: grid;
+        column-gap: theme('width.10');
+        grid-auto-flow: column;
+        grid-template-rows: repeat(5, auto);
+    }
+
+    ._nav_subitem {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
 

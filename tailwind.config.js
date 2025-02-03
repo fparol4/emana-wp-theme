@@ -3,6 +3,7 @@ const theme = {
     'primary-900': '#ffff5a', 
     'primary-600': '#ffffaa', 
     'primary-300': '#ebe6dc', 
+    'brown-300': '#6C5527', 
   }, 
   fontFamily: {
     sans: ['Archivo', 'system-ui']
