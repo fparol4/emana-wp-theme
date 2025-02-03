@@ -1142,24 +1142,26 @@ body {
 
 /** navbar **/
 ._nav_item {
-    &::before { /** add a larger hitbox */
+    &::before {
+        /** add a larger hitbox */
         content: '';
-        position: absolute; 
-        top: 100%; 
-        width: 100%; 
-        height: 20px; 
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        height: 20px;
     }
 
     &:hover {
-        color: #6C5527; 
+        color: #6C5527;
 
         svg {
             transform: rotate(180deg);
-            fill: #6C5527; 
+            fill: #6C5527;
         }
 
         ._nav_subitems {
-            visibility: visible; 
+            display: grid;
+            visibility: visible;
         }
     }
 
@@ -1201,14 +1203,17 @@ body {
   }
 
     ._nav_subitems {
-        top: 120%; /** to gap **/
-        visibility: hidden;
+        top: 120%;
+        display: none;
+        /** to gap **/
+        /* visibility: hidden; */
         gap: 12px;
-        display: grid;
+        /* display: grid; */
         -moz-column-gap: 2.5rem;
              column-gap: 2.5rem;
         grid-auto-flow: column;
         grid-template-rows: repeat(5, auto);
+        z-index: 10;
     }
 
     ._nav_subitem {
@@ -1217,22 +1222,51 @@ body {
         }
     }
 }
+
+
+#_sidebar_tags {
+    a {
+        background: #DDD5CA !important;
+    }
+
+    a:nth-child(4n - 3),
+    a:nth-child(4n) {
+        background-color: #ffff5a !important;
+    }
+}
+
+
 .hover\:underline:hover{
   text-decoration-line: underline !important;
 }
+
+
 .hover\:shadow-md:hover{
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color) !important;
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
 }
+
+
+.hover\:shadow-sm:hover{
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) !important;
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color) !important;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+}
+
+
 .focus\:outline-none:focus{
   outline: 2px solid transparent !important;
   outline-offset: 2px !important;
 }
+
+
 .disabled\:bg-gray-400:disabled{
   --tw-bg-opacity: 1 !important;
   background-color: rgb(156 163 175 / var(--tw-bg-opacity, 1)) !important;
 }
+
+
 @media (min-width: 768px){
 
   .md\:visible{
@@ -1318,4 +1352,3 @@ body {
     text-align: start !important;
   }
 }
-

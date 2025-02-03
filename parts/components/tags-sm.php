@@ -19,7 +19,7 @@ foreach ($wp_categories as $category) {
     <?php if (empty($categories)): ?>
         <span class="text-sm">Não há tags disponíveis</span>
     <?php else: ?>
-        <div class="grid grid-cols-2 gap-2 text-lg">
+        <div id="_sidebar_tags" class="grid grid-cols-2 gap-2 text-lg">
             <?php foreach ($categories as $category): ?>
                 <a href="<?php echo $category['url'] ?>" class="bg-slate-200 py-1 px-8 text-center hover:shadow-md">
                     <?php echo $category['name']; ?>

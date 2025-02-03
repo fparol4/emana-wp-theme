@@ -1,81 +1,90 @@
 <?php
-$nav_links = cmb2_get_option('cmb_theme_options', 'nav_group');
+$nav_group = cmb2_get_option('cmb_theme_options', 'nav_group');
 
-$nav_links = [
-    [
-        "name" => "Alimentação",
-        "url" => "first.com",
-        "nested" => [
-            ["name" => "Alimentação dia a dia", "url" => ""],
-            ["name" => "Distribuição de macronutrientes", "url" => ""],
-            ["name" => "Periodização alimentar", "url" => ""],
-            ["name" => "Suplementação", "url" => ""],
-            ["name" => "Minerais e vitaminas", "url" => ""],
+foreach ($nav_group as $key => $link) {
+    $subitems = [];
 
-            ["name" => "Alimentação dia a dia", "url" => ""],
-            ["name" => "Distribuição de macronutrientes", "url" => ""],
-            ["name" => "Periodização alimentar", "url" => ""],
-            ["name" => "Suplementação", "url" => ""],
-            ["name" => "Minerais e vitaminas", "url" => ""],
-        ]
-    ],
-    [
-        "name" => "Sono",
-        "url" => "first.com",
-    ],
-    [
-        "name" => "Exercício",
-        "url" => "first.com",
-        "nested" => [
-            ["name" => "Ofertas", "url" => ""],
-            ["name" => "Nutrição e Bem-Estar", "url" => ""],
-            ["name" => "Performance e Energia", "url" => ""],
-            ["name" => "Relaxamento e Mente", "url" => ""],
-            ["name" => "Para Cada Um", "url" => ""],
-        ]
-    ],
-    [
-        "name" => "Gerenciamento de estresse",
-        "url" => "first.com",
-        "nested" => [
-            ["name" => "Ofertas", "url" => ""],
-            ["name" => "Nutrição e Bem-Estar", "url" => ""],
-            ["name" => "Performance e Energia", "url" => ""],
-            ["name" => "Relaxamento e Mente", "url" => ""],
-            ["name" => "Para Cada Um", "url" => ""],
-        ]
-    ],
-    [
-        "name" => "Navegue pela Loja",
-        "url" => "first.com",
-        "nested" => [
-            ["name" => "Ofertas", "url" => ""],
-            ["name" => "Nutrição e Bem-Estar", "url" => ""],
-            ["name" => "Performance e Energia", "url" => ""],
-            ["name" => "Relaxamento e Mente", "url" => ""],
-            ["name" => "Para Cada Um", "url" => ""],
+    foreach($link['subitems'] as $subitem) {
+        $item = explode(';', $subitem);
+        $name = trim($item[0]); 
+        $url = trim($item[1]); 
+        $subitems[] = ['name' => $name, 'url' => $url]; 
+    }
 
-            ["name" => "Alimentação dia a dia", "url" => ""],
-            ["name" => "Distribuição de macronutrientes", "url" => ""],
-            ["name" => "Periodização alimentar", "url" => ""],
-            ["name" => "Suplementação", "url" => ""],
-            ["name" => "Minerais e vitaminas", "url" => ""],
+    $nav_group[$key]['nested'] = $subitems; 
+} 
 
-            ["name" => "Alimentação dia a dia", "url" => ""],
-            ["name" => "Distribuição de macronutrientes", "url" => ""],
-            ["name" => "Periodização alimentar", "url" => ""],
-            ["name" => "Suplementação", "url" => ""],
-            ["name" => "Minerais e vitaminas", "url" => ""]
-        ]
-    ]
-]; ?>
+// $nav_links = [
+//     [
+//         "name" => "Alimentação",
+//         "url" => "first.com",
+//         "nested" => [
+//             ["name" => "Alimentação dia a dia", "url" => ""],
+//             ["name" => "Distribuição de macronutrientes", "url" => ""],
+//             ["name" => "Periodização alimentar", "url" => ""],
+//             ["name" => "Suplementação", "url" => ""],
+//             ["name" => "Minerais e vitaminas", "url" => ""],
+
+//             ["name" => "Alimentação dia a dia", "url" => ""],
+//             ["name" => "Distribuição de macronutrientes", "url" => ""],
+//             ["name" => "Periodização alimentar", "url" => ""],
+//             ["name" => "Suplementação", "url" => ""],
+//             ["name" => "Minerais e vitaminas", "url" => ""],
+//         ]
+//     ],
+//     [
+//         "name" => "Sono",
+//         "url" => "first.com",
+//     ],
+//     [
+//         "name" => "Exercício",
+//         "url" => "first.com",
+//         "nested" => [
+//             ["name" => "Ofertas", "url" => ""],
+//             ["name" => "Nutrição e Bem-Estar", "url" => ""],
+//             ["name" => "Performance e Energia", "url" => ""],
+//             ["name" => "Relaxamento e Mente", "url" => ""],
+//             ["name" => "Para Cada Um", "url" => ""],
+//         ]
+//     ],
+//     [
+//         "name" => "Gerenciamento de estresse",
+//         "url" => "first.com",
+//         "nested" => [
+//             ["name" => "Ofertas", "url" => ""],
+//             ["name" => "Nutrição e Bem-Estar", "url" => ""],
+//             ["name" => "Performance e Energia", "url" => ""],
+//             ["name" => "Relaxamento e Mente", "url" => ""],
+//             ["name" => "Para Cada Um", "url" => ""],
+//         ]
+//     ],
+//     [
+//         "name" => "Navegue pela Loja",
+//         "url" => "first.com",
+//         "nested" => [
+//             ["name" => "Ofertas", "url" => ""],
+//             ["name" => "Nutrição e Bem-Estar", "url" => ""],
+//             ["name" => "Performance e Energia", "url" => ""],
+//             ["name" => "Relaxamento e Mente", "url" => ""],
+//             ["name" => "Para Cada Um", "url" => ""],
+
+//             ["name" => "Alimentação dia a dia", "url" => ""],
+//             ["name" => "Distribuição de macronutrientes", "url" => ""],
+//             ["name" => "Periodização alimentar", "url" => ""],
+//             ["name" => "Suplementação", "url" => ""],
+//             ["name" => "Minerais e vitaminas", "url" => ""]
+//         ]
+//     ]
+// ];
+
+?>
 
 <nav class="bg-primary-900 h-11 hidden md:flex items-center justify-center text-sm gap-4 md:gap-8">
-    <?php foreach ($nav_links as $link): ?>
+    <?php foreach ($nav_group as $link): ?>
         <?php $has_subitems = !empty($link['nested']); ?>
 
         <div class="_nav_item relative">
-            <div class="flex items-center gap-2">
+            <div class="_nav_item_box flex items-center gap-2">
                 <a href="<?php echo $link['url']; ?>">
                     <?php echo $link['name']; ?>
                 </a>

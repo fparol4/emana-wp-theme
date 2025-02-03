@@ -211,21 +211,18 @@ function setup_home_form() {
 /** navbar-positioning */
 function setup_nav_positioning() {
     function _set_nav_subitems_position(_nav_item) {
-        console.log(_nav_item)
         var _nav_subitems = _nav_item.querySelector('._nav_subitems')
-        if (!_nav_subitems) return 
+        if (!_nav_subitems) return
 
         var _box_pos = _nav_subitems.getBoundingClientRect();
-
         if (_box_pos.right > window.innerWidth) {
-            log('will remove')
             _nav_subitems.style.left = 'auto'
             _nav_subitems.style.right = '0'
         } 
     }
 
-    var _nav_items = document.querySelectorAll('._nav_item')
-    _nav_items.forEach(item => item.addEventListener('mouseenter', _set_nav_subitems_position(item)))
+    var _nav_subitems = document.querySelectorAll('._nav_item')
+    _nav_subitems.forEach(item => item.addEventListener('mouseenter', () => _set_nav_subitems_position(item)))
 }
 
 function safe_execute(fn) {

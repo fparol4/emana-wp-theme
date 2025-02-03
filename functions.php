@@ -369,20 +369,20 @@ function set_theme_options()
     ));
 
     $cmb->add_group_field($nav_group, array(
-        'id' => 'navitem_text',
+        'id' => 'name',
         'name' => 'Texto do Link (obrigatório)',
         'type' => 'text',
     ));
 
     $cmb->add_group_field($nav_group, array(
-        'id' => 'navitem_url',
+        'id' => 'url',
         'name' => 'URL de Redirecionamento (obrigatório)',
         'type' => 'text_url',
     ));
 
     $cmb->add_group_field($nav_group, array(
-        'id' => 'navitem_subgroup',
-        'name' => 'Sub-Links (um por linha)',
+        'id' => 'subitems',
+        'name' => 'Sub-Links (um por linha, separados por ";")',
         'type' => 'text',
         'repeatable' => true,
     ));
