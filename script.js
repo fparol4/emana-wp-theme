@@ -175,13 +175,20 @@ function set_open_contact() {
 
 function _handle_form_submit() {
     var form = document.querySelector('#_contact_form')
-    var _contact_form_btn = form.querySelector('#_contact_form_btn')
     var form_data = new FormData(form)
-
-    var _confirm_inputs = [...form.querySelectorAll('input[type="checkbox"]')];
-    var _uncofirmed = _confirm_inputs.find(e => !e.checked);
-
+    
+    var _contact_form_btn = form.querySelector('#_contact_form_btn')
+    var _required_alert = form.querySelector('#required_alert')
     var _terms_alert_text = form.querySelector('#_terms_alert')
+    
+    var _required_inputs = [...form.querySelectorAll('input[type="text')]
+    var _confirm_inputs = [...form.querySelectorAll('input[type="checkbox"]')]
+    
+    var _fill_all = _required_inputs.every(i => i.value); 
+    if (!_fill_all) _required_alert.classList.remove('hidden') 
+    else _required_alert.classList.add('hidden')
+    
+    var _uncofirmed = _confirm_inputs.find(e => !e.checked)
     if (_uncofirmed) return _terms_alert_text.classList.remove('hidden')
     else _terms_alert_text.classList.add('hidden')
 

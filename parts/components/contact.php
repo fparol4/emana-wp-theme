@@ -11,7 +11,8 @@
         </div>
 
         <!-- contact/email -->
-        <div class="flex-grow flex flex-col md:flex-row justify-center items-center gap-8 md:gap-24 transition-all sticky">
+        <div
+            class="flex-grow flex flex-col md:flex-row justify-center items-center gap-8 md:gap-24 transition-all sticky">
             <div class="flex flex-col justify-center text-center md:text-start">
                 <h3 class="uppercase font-bold text-3xl text-slate-800">
                     <span class="font-extrabold">Emane</span> com a gente
@@ -40,9 +41,14 @@
                             <label for="data_collect">* Estou de acordo com a coleta e uso dos dados fornecidos para as
                                 finalidades aqui descritas.</label>
                         </div>
-                        <span id="_terms_alert" class="text-red-800 text-xs hidden">
-                            Você deve aceitar os nossos termos e condições para se cadastrar.
-                        </span>
+                        <div class="flex flex-col">
+                            <span id="required_alert" class="text-red-800 text-xs hidden">
+                                - Você deve preencher todos os campos para se cadastrar.
+                            </span>
+                            <span id="_terms_alert" class="text-red-800 text-xs hidden">
+                                - Você deve aceitar os nossos termos e condições para se cadastrar.
+                            </span>
+                        </div>
                         <button id="_contact_form_btn" type="button" onclick="_handle_form_submit()"
                             class="w-full p-2 bg-primary-900 disabled:bg-gray-400">Enviar</button>
                     </div>
