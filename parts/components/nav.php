@@ -89,7 +89,7 @@ foreach ($nav_group as $key => $link) {
                     <?php echo $link['name']; ?>
                 </a>
                 <?php if ($has_subitems): ?>
-                    <svg fill="#000000" height="8px" width="8px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                    <svg style="rotate: 180deg;" fill="#000000" height="8px" width="8px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve">
                         <path id="XMLID_224_"
                             d="M325.606,229.393l-150.004-150C172.79,76.58,168.974,75,164.996,75c-3.979,0-7.794,1.581-10.607,4.394
