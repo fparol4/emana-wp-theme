@@ -36,11 +36,13 @@ $header_links = cmb2_get_option('cmb_theme_options', 'header_group');
     </div>
 
     <div class="uppercase gap-6 hidden md:flex items-center text-xs">
-        <?php foreach ($header_links as $link): ?>
-            <a class="items-center flex gap-2" href="<?php echo $link['header_link_url']; ?>">
-                <?php echo $link['header_link_text']; ?>
-            </a>
-        <?php endforeach; ?>
+        <?php if (!empty($header_links)): ?>
+            <?php foreach ($header_links as $link): ?>
+                <a class="items-center flex gap-2" href="<?php echo $link['header_link_url']; ?>">
+                    <?php echo $link['header_link_text']; ?>
+                </a>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </div>
 
     <div class="flex md:hidden justify-center items-center gap-4">
@@ -95,11 +97,13 @@ $header_links = cmb2_get_option('cmb_theme_options', 'header_group');
 
         <section id="side-content" class="flex flex-col min-h-[60%] justify-center items-center gap-8">
             <div id="side-links" class="flex flex-col items-center text-2xl font-medium gap-4">
-                <?php foreach ($header_links as $link): ?>
-                    <a class="hover:underline" href="<?php echo $link['header_link_url']; ?>">
-                        <?php echo $link['header_link_text']; ?>
-                    </a>
-                <?php endforeach; ?>
+                <?php if (!empty($header_links)): ?>
+                    <?php foreach ($header_links as $link): ?>
+                        <a class="hover:underline" href="<?php echo $link['header_link_url']; ?>">
+                            <?php echo $link['header_link_text']; ?>
+                        </a>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
             <div id="side-tags">
                 <?php get_template_part('parts/components/tags-sm'); ?>

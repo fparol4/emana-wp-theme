@@ -20,23 +20,27 @@ $posts = _query_posts($query_args)['posts'];
                         Resultados da pesquisa:
                         <span class="font-bold"><?php echo $search_str ?></span>
                     </h3>
-                    
+
 
                     <?php if (empty($posts)): ?>
-                        <span class="text-slate-800 text-xs">Nenhuma publicação foi encontrada. Mas você pode tentar uma nova busca :) </span>
+                        <span class="text-slate-800 text-xs">Nenhuma publicação foi encontrada. Mas você pode tentar uma
+                            nova busca :) </span>
                     <?php else: ?>
-                    <span class="text-slate-800 text-xs">(<?php echo count($posts); ?>) - Publicações Encontradas </span>
+                        <span class="text-slate-800 text-xs">(<?php echo count($posts); ?>) - Publicações Encontradas
+                        </span>
                     <?php endif; ?>
                 </div>
 
                 <ul class="list-disc flex flex-col gap-3">
-                    <?php foreach ($posts as $post): ?>
-                        <li>
-                            <a class="hover:underline" href="/?p=<?php echo $post['id'] ?>">
-                                <?php echo $post['title'] ?>
-                            </a>
-                        </li>
-                    <?php endforeach; ?>
+                    <?php if (!empty($posts)): ?>
+                        <?php foreach ($posts as $post): ?>
+                            <li>
+                                <a class="hover:underline" href="/?p=<?php echo $post['id'] ?>">
+                                    <?php echo $post['title'] ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </ul>
             </div>
 

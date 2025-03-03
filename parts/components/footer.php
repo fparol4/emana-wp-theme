@@ -1,7 +1,7 @@
 <?php
 $footer_institutional_links = cmb2_get_option('cmb_theme_options', 'footer_institutional');
 $footer_links = cmb2_get_option('cmb_theme_options', 'footer_links');
-$footer_contacts = cmb2_get_option('cmb_theme_options', 'footer_contact')[0];
+$footer_contacts = cmb2_get_option('cmb_theme_options', 'footer_contact')[0] || [];
 
 ?>
 
@@ -19,22 +19,26 @@ $footer_contacts = cmb2_get_option('cmb_theme_options', 'footer_contact')[0];
         <div id="institucional">
             <h4 class="font-bold text-sm mb-2">Institucional</h4>
             <div class="text-sm flex flex-col gap-1">
-                <?php foreach ($footer_institutional_links as $link): ?>
-                    <a href="<?php echo $link['footer_institutional_url']; ?>">
-                        <?php echo $link['footer_institutional_text']; ?>
-                    </a>
-                <?php endforeach; ?>
+                <?php if (!empty($footer_institutional_links)): ?>
+                    <?php foreach ($footer_institutional_links as $link): ?>
+                        <a href="<?php echo $link['footer_institutional_url']; ?>">
+                            <?php echo $link['footer_institutional_text']; ?>
+                        </a>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
 
         <div id="links-uteis">
             <h4 class="font-bold text-sm mb-2">Links Úteis</h4>
             <div class="text-sm flex flex-col gap-1">
-                <?php foreach ($footer_links as $link): ?>
-                    <a href="<?php echo $link['footer_links_url']; ?>">
-                        <?php echo $link['footer_links_text']; ?>
-                    </a>
-                <?php endforeach; ?>
+                <?php if (!empty($footer_links)): ?>
+                    <?php foreach ($footer_links as $link): ?>
+                        <a href="<?php echo $link['footer_links_url']; ?>">
+                            <?php echo $link['footer_links_text']; ?>
+                        </a>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -48,8 +52,7 @@ $footer_contacts = cmb2_get_option('cmb_theme_options', 'footer_contact')[0];
                 <a href="https://wa.me/55<?php echo preg_replace('/\D/', '', $footer_contacts['footer_phone']); ?>"
                     class="flex items-center gap-2">
                     <!-- whatsapp-svg -->
-                    <svg width="12px" height="12px" viewBox="0 0 16 16" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
+                    <svg width="12px" height="12px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M1 5V1H7V5L4.5 7.5L8.5 11.5L11 9H15V15H11C5.47715 15 1 10.5228 1 5Z" fill="#000000" />
                     </svg>
                     <!-- whatsapp-svg -->
