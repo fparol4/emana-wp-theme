@@ -2,14 +2,18 @@
 $footer_institutional_links = cmb2_get_option('cmb_theme_options', 'footer_institutional') ?: [];
 $footer_links = cmb2_get_option('cmb_theme_options', 'footer_links') ?: [];
 
-$footer_contacts = cmb2_get_option('cmb_theme_options', 'footer_contact') ?: [[
-    'footer_phone' => '', 
-    'footer_whatsapp' => '',
-    'footer_email' => '',
-]];
-
-if ($footer_contacts) $footer_contacts = $footer_contacts[0];
-
+$footer_contacts = cmb2_get_option('cmb_theme_options', 'footer_contact');
+$footer_contacts = !empty($footer_contacts[0]) ?
+    $footer_contacts[0] :
+    [
+        'footer_phone' => '',
+        'footer_whatsapp' => '',
+        'footer_email' => '',
+        'footer_youtube' => '', 
+        'footer_tiktok' => '', 
+        'footer_instagram' => '', 
+        'footer_facebook' => '', 
+    ]; 
 ?>
 
 <!-- footer -->
@@ -18,7 +22,7 @@ if ($footer_contacts) $footer_contacts = $footer_contacts[0];
     <div
         class="w-full max-w-5xl h-2/3 p-4 flex flex-col md:flex-row justify-between items-center  text-center md:text-start gap-6 md:gap-0">
         <div class="flex justify-center items-center">
-            <a href="/">
+            <a href="<?php g_url('/') ?>">
                 <img class="w-[220px]" src="<?php g_asset('/emana.png') ?>" alt="Logo Emana">
             </a>
         </div>
@@ -56,7 +60,7 @@ if ($footer_contacts) $footer_contacts = $footer_contacts[0];
                     <?php echo $footer_contacts['footer_email']; ?>
                 </a>
 
-                <a href="https://wa.me/55<?php echo preg_replace('/\D/', '', $footer_contacts['footer_phone']); ?>"
+                <a href="tel:<?php echo $footer_contacts['footer_phone']; ?>"
                     class="flex items-center gap-2">
                     <!-- whatsapp-svg -->
                     <svg width="12px" height="12px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

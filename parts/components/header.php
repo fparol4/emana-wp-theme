@@ -6,7 +6,7 @@ $header_links = cmb2_get_option('cmb_theme_options', 'header_group');
 <header
     class="bg-primary-300 py-2 px-4 md:px-12 w-full h-[124px] flex justify-between md:justify-center items-center gap-16 relative">
     <div>
-        <a href="/">
+        <a href="<?php g_url('/') ?>">
             <img class="w-[180px] md:w-[220px]" src="<?php g_asset('/emana.png') ?>" alt="Logo Emana">
         </a>
     </div>

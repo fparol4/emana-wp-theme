@@ -26,7 +26,7 @@ $posts = _query_posts($query_args)['posts'];
                     <?php if (!empty($posts)): ?>
                         <?php foreach ($posts as $post): ?>
                             <li>
-                                <a class="hover:underline" href="/?p=<?php echo $post['id'] ?>">
+                                <a class="hover:underline" href="<?php g_url('/?p='.$post['id']) ?>">
                                     <?php echo $post['title'] ?>
                                 </a>
                             </li>

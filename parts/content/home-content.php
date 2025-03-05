@@ -30,7 +30,7 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
                     <?php if (!empty($banners)): ?>
                         <?php foreach ($banners as $banner): ?>
                             <!-- When banner has only image -->
-                            <?php if ($banner['cmb_home_only_banner']): ?>
+                            <?php if (!empty($banner['cmb_home_only_banner'])): ?>
                                 <div class="h-full md:h-auto swiper-slide flex flex-col md:flex-row">
                                     <a class="block md:hidden w-full h-full md:h-auto"
                                         href="<?php echo $banner['cmb_home_banner_url'] ?>">
@@ -97,7 +97,7 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
                                     class="md:w-1/2  bg-slate-100 flex flex-col p-12 md:px-12 justify-center items-center gap-4 text-center">
                                     <h4 class="uppercase text-amber-800 font-bold"><?php echo $post['category']; ?></h4>
                                     <p class="text-xl font-light"><?php echo $post['title']; ?></p>
-                                    <a href="/?p=<?php echo $post['id'] ?>">
+                                    <a href="<?php g_url('/?p='.$post['id']) ?>">
                                         <button class="uppercase bg-primary-900 rounded-lg px-3 py-2 text-xl">
                                             Leia mais
                                         </button>
@@ -120,13 +120,13 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
         <div id="remaining-posts" class="w-full flex flex-col gap-8">
             <?php if (!empty($remaining_posts)): ?>
                 <?php foreach ($remaining_posts as $post): ?>
-                    <div class="post h-[536px] md:h-auto flex flex-col md:flex-row shadow-md">
+                    <div class="post h-[536px] md:h-auto flex flex-col items-center md:flex-row shadow-md">
                         <img class="md:w-1/2 h-1/2 object-cover" src="<?php echo $post['banner']; ?>">
                         <div
                             class="md:w-1/2 bg-slate-100 flex flex-col p-12 md:px-12 justify-center items-center gap-4 text-center">
                             <h4 class="uppercase text-amber-800 font-bold"><?php echo $post['category']; ?></h4>
                             <p class="text-xl font-light"><?php echo $post['title']; ?></p>
-                            <a href="/?p=<?php echo $post['id'] ?>">
+                            <a href="<?php g_url('/?p='.$post['id']) ?>">
                                 <button class="uppercase bg-primary-900 rounded-lg px-3 py-2 text-xl">
                                     Leia mais
                                 </button>

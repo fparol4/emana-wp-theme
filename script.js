@@ -3,8 +3,12 @@ const { log } = console
 log('Emana Blog - WP Theme [1.0.0]')
 
 /** @helpers */
+function get_wp_url(path) { 
+    return wpdata.baseurl + path
+}
+
 function win_redirect(path) {
-    window.location.href = path;
+    window.location.href = wpdata.baseurl + path;
 }
 
 function show_toast(message, options = {}) {
@@ -72,11 +76,16 @@ function _toggle_pg_scroll() {
 
 var _load_more_offset = 3;
 async function _load_more_posts() {
-    var _load_limit = 1; //@TODO 
+    var _load_limit = 2; 
     var _remaining_posts_box = document.querySelector('#remaining-posts');
-    var base_url = `?rest_route=/api/posts&offset=${_load_more_offset}&limit=${_load_limit}`;
+    var base_url = get_wp_url(`/?rest_route=/api/posts&offset=${_load_more_offset}&limit=${_load_limit}`);
+    
+    console.log(base_url)
+
     var { posts, total_posts } = await fetch(base_url)
         .then(response => response.json());
+
+    console.log(posts)
 
     var posts_html = posts.reduce((p, c) => {
         var _post_html = `
@@ -184,13 +193,15 @@ function _handle_form_submit() {
     var _required_inputs = [...form.querySelectorAll('input[type="text')]
     var _confirm_inputs = [...form.querySelectorAll('input[type="checkbox"]')]
     
+    var _uncofirmed = _confirm_inputs.find(e => !e.checked)
+    if (_uncofirmed) _terms_alert_text.classList.remove('hidden')
+    else _terms_alert_text.classList.add('hidden')
+
     var _fill_all = _required_inputs.every(i => i.value); 
-    if (!_fill_all) _required_alert.classList.remove('hidden') 
+    if (!_fill_all) return _required_alert.classList.remove('hidden') 
     else _required_alert.classList.add('hidden')
     
-    var _uncofirmed = _confirm_inputs.find(e => !e.checked)
-    if (_uncofirmed) return _terms_alert_text.classList.remove('hidden')
-    else _terms_alert_text.classList.add('hidden')
+
 
     var _payload = {
         email: form_data.get('email'),
@@ -232,20 +243,21 @@ function setup_nav_positioning() {
     _nav_subitems.forEach(item => item.addEventListener('mouseenter', () => _set_nav_subitems_position(item)))
 }
 
-function safe_execute(fn) {
+function safe_execute(fn, disabled) {
     try {
         fn();
-    } catch {
+    } catch (error) {
+        if (disabled) throw error 
         log(`error executing '${fn.name}'`)
     }
 }
 
 window.onload = () => {
-    safe_execute(set_swiper);
-    safe_execute(set_search_keypress);
-    safe_execute(set_open_contact);
-    safe_execute(setup_home_form);
-    safe_execute(setup_nav_positioning);
+    safe_execute(set_swiper, true);
+    safe_execute(set_search_keypress, true);
+    safe_execute(set_open_contact, true);
+    safe_execute(setup_home_form, true);
+    safe_execute(setup_nav_positioning, true);
 }
 
 console.log('Helloworld - END')

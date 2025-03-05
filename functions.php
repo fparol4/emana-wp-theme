@@ -27,6 +27,7 @@ function wp_theme_scripts()
 {
     wp_enqueue_style('wp-css', get_template_directory_uri() . '/style.css');
     wp_enqueue_script('wp-js', get_template_directory_uri() . '/script.js');
+    wp_localize_script('wp-js', 'wpdata', array( 'baseurl' => get_site_url())); 
 
     wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
     wp_enqueue_script('swiper-js', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js');
@@ -76,6 +77,12 @@ function g_asset($asset)
     echo $path;
 }
 
+function g_url($path)
+{
+    $path = get_site_url() . $path;
+    echo $path;
+}
+
 /** @Helpers */
 function _query_posts($query_args)
 {
@@ -107,12 +114,25 @@ function _query_posts($query_args)
 function map_products2slider($arguments)
 {
     $global_products = cmb2_get_option('cmb_theme_options', 'products_group') ?: [];
-    $products = $arguments['products'] ?: $global_products;
+
+    $products = isset($arguments['products']) ?
+        $arguments['products'] : $global_products;
 
     $products_mapped = [];
     foreach ($products as $product) {
         if (!empty($product['product_view']))
             continue;
+
+        // set product default fields (??)
+        $product = [
+            'product_name' => $product['product_name'] ?? '',
+            'product_image' => $product['product_image'] ?? '',
+            'product_url' => $product['product_url'] ?? '',
+            'product_price' => $product['product_price'] ?? 0,
+            'product_price_with_discount' => $product['product_price_with_discount'] ?? 0,
+            'product_installments' => $product['product_installments'] ?? 1,
+        ];
+
 
         $price = normalize_price(price: $product['product_price']);
         $price_with_discount = normalize_price($product['product_price_with_discount']);
@@ -128,7 +148,7 @@ function map_products2slider($arguments)
             'url' => $product['product_url'],
             'price' => $product['product_price'],
             'price_with_discount' => $product['product_price_with_discount'],
-            'installments' => $product['installments'],
+            'installments' => $installments,
             'with_installments' => $with_installments,
         );
 
@@ -439,7 +459,7 @@ function set_theme_options()
                 'name' => 'Somente Imagem',
                 'desc' => 'Selecione caso o banner seja apenas uma imagem',
                 'type' => 'checkbox',
-                'default' => '',
+                'default' => 'false',
             ),
             array(
                 'id' => 'cmb_home_banner_title',

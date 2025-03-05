@@ -4,11 +4,15 @@ $nav_group = cmb2_get_option('cmb_theme_options', 'nav_group') ?: [];
 foreach ($nav_group as $key => $link) {
     $subitems = [];
 
-    foreach ($link['subitems'] as $subitem) {
-        $item = explode(';', $subitem);
-        $name = trim($item[0]);
-        $url = trim($item[1]);
-        $subitems[] = ['name' => $name, 'url' => $url];
+    if (!empty($link['subitems'])) {
+        foreach ($link['subitems'] as $subitem) {
+            $item = explode(';', $subitem);
+            $name = trim($item[0]);
+            $url = trim($item[1]);
+            $subitems[] = ['name' => $name, 'url' => $url];
+        }
+
+        $nav_group[$key]['nested'] = $subitems;
     }
 
     $nav_group[$key]['nested'] = $subitems;
