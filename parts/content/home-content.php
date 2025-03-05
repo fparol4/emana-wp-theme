@@ -72,7 +72,7 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
 
         <!-- @sm-product-slider -->
         <div class="flex md:hidden w-full">
-            <?php get_template_part('/parts/components/products-slider-sm'); ?>
+            <?php //get_template_part('/parts/components/products-slider-sm'); ?>
         </div>
 
         <!-- content/grid_1 -->
@@ -82,8 +82,9 @@ $remaining_posts = array_slice($posts, $FIRST_SECTION_POSTS);
             <div class="md:w-[80%] flex flex-col justify-end h-full gap-12">
 
                 <!-- products -->
+                 //updated
                 <div class="w-full hidden md:flex">
-                    <?php get_template_part('/parts/components/products-slider'); ?>
+                    <?php //get_template_part('/parts/components/products-slider'); ?>
                 </div>
 
                 <!-- first-posts -->
