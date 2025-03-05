@@ -1,6 +1,10 @@
 <?php
 /** @sidebarbanner */
-$sidebar_banner = cmb2_get_option('cmb_theme_options', 'sidebar_group')[0];
+$sidebar_banner = cmb2_get_option('cmb_theme_options', 'sidebar_group') ?: [];
+
+if ($sidebar_banner) {
+    $sidebar_banner = $sidebar_banner[0]; 
+} 
 ?>
 
 <div class="w-48 h-full hidden md:flex flex-col items-center gap-8 px-2">

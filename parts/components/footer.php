@@ -1,7 +1,14 @@
 <?php
-$footer_institutional_links = cmb2_get_option('cmb_theme_options', 'footer_institutional');
-$footer_links = cmb2_get_option('cmb_theme_options', 'footer_links');
-$footer_contacts = cmb2_get_option('cmb_theme_options', 'footer_contact')[0] || [];
+$footer_institutional_links = cmb2_get_option('cmb_theme_options', 'footer_institutional') ?: [];
+$footer_links = cmb2_get_option('cmb_theme_options', 'footer_links') ?: [];
+
+$footer_contacts = cmb2_get_option('cmb_theme_options', 'footer_contact') ?: [[
+    'footer_phone' => '', 
+    'footer_whatsapp' => '',
+    'footer_email' => '',
+]];
+
+if ($footer_contacts) $footer_contacts = $footer_contacts[0];
 
 ?>
 

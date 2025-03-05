@@ -106,9 +106,8 @@ function _query_posts($query_args)
 
 function map_products2slider($arguments)
 {
-    $global_products = cmb2_get_option('cmb_theme_options', 'products_group');
-
-    $products = $arguments['products'] ?? $global_products;
+    $global_products = cmb2_get_option('cmb_theme_options', 'products_group') ?: [];
+    $products = $arguments['products'] ?: $global_products;
 
     $products_mapped = [];
     foreach ($products as $product) {
@@ -213,12 +212,14 @@ function set_post_metaboxes()
                 'name' => 'Banner (Obrigatório)',
                 'desc' => 'Faça o upload da imagem principal da publicação',
                 'type' => 'file',
+                'default' => '',
             ),
             array(
                 'id' => 'cmb_post_summary',
                 'name' => 'Sumário (Obrigatório)',
                 'desc' => 'Adicione um resumo descritivo da publicação',
                 'type' => 'textarea_small',
+                'default' => '',
                 'options' => [
                     'textarea_rows' => 5
                 ],
@@ -244,36 +245,43 @@ function set_post_metaboxes()
                 'name' => 'Ocultar o Produto',
                 'desc' => 'Ocultar o produto da vitrine',
                 'type' => 'checkbox',
+                'default' => '',
             ),
             array(
                 'id' => 'product_name',
                 'name' => 'Nome do Produto (obrigatório)',
                 'type' => 'text',
+                'default' => '',
             ),
             array(
                 'id' => 'product_url',
                 'name' => 'URL do Produto (obrigatório)',
                 'type' => 'text_url',
+                'default' => '',
             ),
             array(
                 'id' => 'product_image',
                 'name' => 'Imagem do Produto (obrigatório)',
                 'type' => 'file',
+                'default' => '',
             ),
             array(
                 'id' => 'product_price',
                 'name' => 'Preço do Produto (obrigatório)',
                 'type' => 'text_money',
+                'default' => '',
             ),
             array(
                 'id' => 'product_price_with_discount',
                 'name' => 'Preço do Produto com Desconto',
                 'type' => 'text_money',
+                'default' => '',
             ),
             array(
                 'id' => 'product_installments',
                 'name' => 'Parcelas do Produto (obrigatório)',
                 'type' => 'text',
+                'default' => '',
             ),
         )
     ));
@@ -311,6 +319,7 @@ function set_theme_options()
                 'id' => 'topbar_icon-svg',
                 'name' => 'Ícone do anúncio (Necessário ser SVG)',
                 'type' => 'textarea_code',
+                'default' => '',
                 'options' => array(
                     'disable_codemirror' => false,
                 ),
@@ -320,6 +329,7 @@ function set_theme_options()
             ),
             array(
                 'id' => 'topbar_text',
+                'default' => '',
                 'name' => 'Texto do anúncio (obrigatório)',
                 'type' => 'text',
             )
@@ -343,11 +353,13 @@ function set_theme_options()
                 'id' => 'header_link_text',
                 'name' => 'Texto do Link (obrigatório)',
                 'type' => 'text',
+                'default' => '',
             ),
             array(
                 'id' => 'header_link_url',
                 'name' => 'URL de Redirecionamento (obrigatório)',
                 'type' => 'text_url',
+                'default' => '',
             )
         )
     ));
@@ -372,12 +384,14 @@ function set_theme_options()
         'id' => 'name',
         'name' => 'Texto do Link (obrigatório)',
         'type' => 'text',
+        'default' => '',
     ));
 
     $cmb->add_group_field($nav_group, array(
         'id' => 'url',
         'name' => 'URL de Redirecionamento (obrigatório)',
         'type' => 'text_url',
+        'default' => '',
     ));
 
     $cmb->add_group_field($nav_group, array(
@@ -385,36 +399,8 @@ function set_theme_options()
         'name' => 'Sub-Links (um por linha, separados por ";")',
         'type' => 'text',
         'repeatable' => true,
+        'default' => '',
     ));
-
-    // $nested_group = $cmb->add_group_field($nav_group, array(
-    //     'id'          => 'navitem_subgroup',
-    //     'type'        => 'group',
-    //     'description' => 'Sub-Links do item',
-    //     'options'     => array(
-    //         'group_title'   => esc_html__('Sub-Link #{#}', 'cmb2'), // {#} gets replaced by row number
-    //         'add_button'    => esc_html__('Adicionar', 'cmb2'),
-    //         'remove_button' => esc_html__('Remover', 'cmb2'),
-    //         'sortable'      => true,
-    //         'closed'        => true,
-    //     ),
-    // ));
-
-    /** > nav_group < */
-
-
-    // $nested_group_id = $cmb->add_group_field('nav_group', array(
-    //     'id' => 'navitem_subgroup',
-    //     'type' => 'group',
-    //     'description' => 'Sub-Links do item',
-    //     'options' => array(
-    //         'group_title' => esc_html__('Sub-Link #{#}', 'cmb2'), // {#} gets replaced by row number
-    //         'add_button' => esc_html__('Adicionar', 'cmb2'),
-    //         'remove_button' => esc_html__('Remover', 'cmb2'),
-    //         'sortable' => true,
-    //         'closed' => true,
-    //     ),
-    // ));
 
     /** @banners */
     $cmb->add_field(field: array(
@@ -434,32 +420,38 @@ function set_theme_options()
                 'id' => 'cmb_home_banner',
                 'name' => 'Imagem (Desktop) (obrigatório)',
                 'type' => 'file',
+                'default' => '',
             ),
             array(
                 'id' => 'cmb_home_banner_sm',
                 'name' => 'Imagem (Mobile)',
                 'type' => 'file',
+                'default' => '',
             ),
             array(
                 'id' => 'cmb_home_banner_url',
                 'name' => 'URL de Redirecionamento (obrigatório)',
                 'type' => 'text_url',
+                'default' => '',
             ),
             array(
                 'id' => 'cmb_home_only_banner',
                 'name' => 'Somente Imagem',
                 'desc' => 'Selecione caso o banner seja apenas uma imagem',
                 'type' => 'checkbox',
+                'default' => '',
             ),
             array(
                 'id' => 'cmb_home_banner_title',
                 'name' => 'Titulo',
                 'type' => 'text',
+                'default' => '',
             ),
             array(
                 'id' => 'cmb_home_banner_subtitle',
                 'name' => 'Subtitulo',
                 'type' => 'text',
+                'default' => '',
             )
 
         )
@@ -484,36 +476,43 @@ function set_theme_options()
                 'name' => 'Ocultar o Produto',
                 'desc' => 'Ocultar o produto da vitrine',
                 'type' => 'checkbox',
+                'default' => '',
             ),
             array(
                 'id' => 'product_name',
                 'name' => 'Nome do Produto (obrigatório)',
                 'type' => 'text',
+                'default' => '',
             ),
             array(
                 'id' => 'product_url',
                 'name' => 'URL do Produto (obrigatório)',
                 'type' => 'text_url',
+                'default' => '',
             ),
             array(
                 'id' => 'product_image',
                 'name' => 'Imagem do Produto (obrigatório)',
                 'type' => 'file',
+                'default' => '',
             ),
             array(
                 'id' => 'product_price',
                 'name' => 'Preço do Produto (obrigatório)',
                 'type' => 'text_money',
+                'default' => '',
             ),
             array(
                 'id' => 'product_price_with_discount',
                 'name' => 'Preço do Produto com Desconto',
                 'type' => 'text_money',
+                'default' => '',
             ),
             array(
                 'id' => 'product_installments',
                 'name' => 'Parcelas do Produto (obrigatório)',
                 'type' => 'text',
+                'default' => '',
             ),
         )
     ));
@@ -531,11 +530,13 @@ function set_theme_options()
                 'id' => 'sidebar_banner_url',
                 'name' => 'Sidebar - Banner URL (obrigatório)',
                 'type' => 'text_url',
+                'default' => '',
             ),
             array(
                 'id' => 'sidebar_banner',
                 'name' => 'Sidebar - Banner (obrigatório)',
                 'type' => 'file',
+                'default' => '',
             )
         )
     ));
@@ -560,11 +561,13 @@ function set_theme_options()
                 'id' => 'footer_institutional_text',
                 'name' => 'Texto (obrigatório)',
                 'type' => 'text',
+                'default' => '',
             ),
             array(
                 'id' => 'footer_institutional_url',
                 'name' => 'URL (obrigatório)',
                 'type' => 'text_url',
+                'default' => '',
             ),
         )
     ));
@@ -586,11 +589,13 @@ function set_theme_options()
                 'id' => 'footer_links_text',
                 'name' => 'Texto (obrigatório)',
                 'type' => 'text',
+                'default' => '',
             ),
             array(
                 'id' => 'footer_links_url',
                 'name' => 'URL (obrigatório)',
                 'type' => 'text_url',
+                'default' => '',
             ),
         )
     ));
@@ -611,36 +616,43 @@ function set_theme_options()
                 'id' => 'footer_email',
                 'name' => 'Email de Contato (obrigatório)',
                 'type' => 'text',
+                'default' => '',
             ),
             array(
                 'id' => 'footer_phone',
                 'name' => 'Telefone de Contato (obrigatório)',
                 'type' => 'text',
+                'default' => '',
             ),
             array(
                 'id' => 'footer_whatsapp',
                 'name' => 'Whatsapp de Contato (obrigatório)',
                 'type' => 'text',
+                'default' => '',
             ),
             array(
                 'id' => 'footer_youtube',
                 'name' => 'Youtube (Social) (obrigatório)',
                 'type' => 'text_url',
+                'default' => '',
             ),
             array(
                 'id' => 'footer_tiktok',
                 'name' => 'TikTok (Social) (obrigatório)',
                 'type' => 'text_url',
+                'default' => '',
             ),
             array(
                 'id' => 'footer_facebook',
                 'name' => 'Facebook (Social) (obrigatório)',
                 'type' => 'text_url',
+                'default' => '',
             ),
             array(
                 'id' => 'footer_instagram',
                 'name' => 'Instagram (Social) (obrigatório)',
                 'type' => 'text_url',
+                'default' => '',
             )
         )
     ));

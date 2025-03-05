@@ -1,7 +1,7 @@
 <!-- contact -->
 <section id="contact-section" class="bg-primary-600 w-full flex flex-col relative">
     <?php
-    if ($args['_with_load'])
+    if (!empty($args['_with_load']))
         get_template_part('parts/components/btn_load-more');
     ?>
 
