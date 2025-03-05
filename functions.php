@@ -113,18 +113,16 @@ function _query_posts($query_args)
 
 function map_products2slider($arguments)
 {
-    $global_products = cmb2_get_option('cmb_theme_options', 'products_group') ?: [];
-
-    $products = isset($arguments['products']) ?
-        $arguments['products'] : $global_products;
-
+    $global_products = cmb2_get_option('cmb_theme_options', 'products_group') ?? [];
+    $products = $arguments['products'] ?? $global_products; 
+    
     $products_mapped = [];
     foreach ($products as $product) {
         if (!empty($product['product_view']))
             continue;
-
-        // set product default fields (??)
-        $product = [
+    
+        // set product default fields (replacing ?? with isset())
+        $product_defaults = [
             'product_name' => $product['product_name'] ?? '',
             'product_image' => $product['product_image'] ?? '',
             'product_url' => $product['product_url'] ?? '',
@@ -132,28 +130,34 @@ function map_products2slider($arguments)
             'product_price_with_discount' => $product['product_price_with_discount'] ?? 0,
             'product_installments' => $product['product_installments'] ?? 1,
         ];
+    
+        try {
+            $price = (float) normalize_price($product_defaults['product_price']);
+            $price_with_discount = (float) normalize_price($product_defaults['product_price_with_discount']);
+            $price2show = $price_with_discount ?: $price;
+            
+            $installments = (int) $product_defaults['product_installments'];
+            $installments = $installments > 0 ? $installments : 1; 
 
-
-        $price = normalize_price(price: $product['product_price']);
-        $price_with_discount = normalize_price($product['product_price_with_discount']);
-        $price2show = $price_with_discount ?: $price;
-
-        $installments = $product['product_installments'];
-        $installment_price = number_format((float) ($price2show / $installments), 2);
-        $with_installments = 'Ou ' . $product['product_installments'] . 'x de R$ ' . $installment_price . ' sem juros';
-
-        $product = array(
-            'name' => $product['product_name'],
-            'image' => $product['product_image'],
-            'url' => $product['product_url'],
-            'price' => $product['product_price'],
-            'price_with_discount' => $product['product_price_with_discount'],
+            $installment_price = number_format($price2show / $installments, 2);
+            $with_installments = "Ou $installments x de R$ $installment_price sem juros";
+        } catch (Throwable $e) {  
+            echo "An error occurred: " . $e->getMessage();
+        }
+    
+        $product_mapped = array(
+            'name' => $product_defaults['product_name'],
+            'image' => $product_defaults['product_image'],
+            'url' => $product_defaults['product_url'],
+            'price' => $product_defaults['product_price'],
+            'price_with_discount' => $product_defaults['product_price_with_discount'],
             'installments' => $installments,
             'with_installments' => $with_installments,
         );
-
-        $products_mapped[] = $product;
+    
+        $products_mapped[] = $product_mapped;
     }
+
     return $products_mapped;
 }
 

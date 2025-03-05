@@ -6,7 +6,7 @@ foreach ($wp_categories as $category) {
     if ($category->term_id === 1)
         continue;
     $category = array(
-        'url' => g_url('/?cat='.$category->term_id),
+        'url' => '/?cat='.$category->term_id,
         'name' => $category->name,
     );
     array_push($categories, $category);
@@ -19,7 +19,7 @@ foreach ($wp_categories as $category) {
     <?php if (empty($categories)): ?>
         <span class="text-sm">Não há tags disponíveis</span>
     <?php else: ?>
-        <div id="_sidebar_tags" class="grid grid-cols-2 gap-2 text-lg">\
+        <div id="_sidebar_tags" class="grid grid-cols-2 gap-2 text-lg">
             <?php if (!empty($categories)): ?>
                 <?php foreach ($categories as $category): ?>
                     <a href="<?php g_url($category['url']) ?>" class="bg-slate-200 py-1 px-8 text-center hover:shadow-md">
